@@ -1,0 +1,3 @@
+graft res
+graft memethesis
+global-exclude *.py[cod]

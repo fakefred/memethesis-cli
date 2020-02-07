@@ -1,0 +1,7 @@
+__pycache__/
+.vscode/
+res/fonts/
+# pypi build files
+build/
+dist/
+memethesis.egg-info/
