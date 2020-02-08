@@ -26,7 +26,7 @@ setup(
         ]
     },
     python_requires='>=3.5',
-    install_requires=['Pillow'],
+    install_requires=['Pillow', 'PyInquirer', 'colored'],
     project_urls={
         'LiberaPay': 'https://liberapay.com/fakefred/donate'
     }

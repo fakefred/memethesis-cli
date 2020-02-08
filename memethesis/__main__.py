@@ -1,11 +1,13 @@
 from argparse import ArgumentParser
 import sys
+from PyInquirer import prompt
 from .meme.drake import make_drake
 from .meme.brainsize import make_brainsize
 from .meme.woman_yelling import make_woman_yelling
 from .meme.caption import make_caption
 from .meme.imageops import stack
 from .meme.separator import make_sep
+from .interactive import interactive
 
 FORMATS = ['drake', 'brainsize', 'womanyelling']
 
@@ -15,7 +17,11 @@ def main():
 
     ''' Frantic payload of arguments. '''
     argparser.add_argument(
-        '-f', '--format', required=True, choices=FORMATS,
+        '-i', '--interactive', action='store_true',
+        help='interactive mode'
+    )
+    argparser.add_argument(
+        '-f', '--format', choices=FORMATS,
         help=f'the meme format to use (Supported: {", ".join(FORMATS)})'
     )
     argparser.add_argument(
@@ -25,10 +31,6 @@ def main():
     argparser.add_argument(
         '-p', '--preview', action='store_true',
         help='display the meme without saving it, unless -o/--output is specified'
-    )
-    argparser.add_argument(
-        '-i', '--interactive', action='store_true',
-        help='interactive mode (for complex-structure memes)'
     )
 
     argparser.add_argument(
@@ -54,9 +56,14 @@ def main():
     args = argparser.parse_args()
 
     if args.interactive:
-        pass  # TODO
+        interactive()
     else:
         # non-interactive (pure-cli) mode
+
+        # validate format
+        if not args.format:
+            print('Error: -f/--format needs to be specified.')
+            sys.exit(1)
         # make sure the meme to be generated has something else to be
         # other than an ephemeral spectre in the volatile RAM,
         # like a file or some screen pixels
