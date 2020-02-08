@@ -53,7 +53,9 @@ def parse_woman_yelling(content: str):
     return None
 
 
-def make_woman_yelling(entities: list, emojis={}, font='res/fonts/NotoSans-Regular.ttf',
+def make_woman_yelling(entities: list, emojis={},
+                       font=path.join(path.dirname(__file__),
+                                      'res/fonts/NotoSans-Regular.ttf'),
                        instance='', saveto='woman_yelling_output.jpg', stroke=False):
     '''
     Procedure:
