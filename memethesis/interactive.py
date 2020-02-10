@@ -146,17 +146,23 @@ captions and lines are no longer accepted.', fgc=3))  # yellow
                 'name': 'num',
                 'message': 'Enter panel # to edit / remove / insert another panel after:',
                 'validate': lambda s: (s.isdecimal() and
-                                       (0 < int(s) < len(panels) + 1)),
+                                       (0 <= int(s) < len(panels) + 1)),
                 'filter': lambda s: int(s)
             }])['num']
+
+            if num == 0:
+                prop_choices = ['Insert after']
+            elif panels[num - 1][0] == 'sep':
+                prop_choices = ['Insert after', 'Remove']
+            else:
+                prop_choices = ['Edit text', 'Edit type',
+                                'Insert after', 'Remove']
 
             prop = prompt([{
                 'type': 'list',
                 'name': 'prop',
                 'message': 'Select how the panel should be modified:',
-                'choices': ((['Edit text', 'Edit type']
-                             if panels[num - 1][0] not in ('line', 'sep') else []) +
-                            ['Insert after', 'Remove'])
+                'choices': prop_choices
             }])['prop']
 
             if prop == 'Edit text':
@@ -188,7 +194,7 @@ captions and lines are no longer accepted.', fgc=3))  # yellow
                     panel_type = DISP_TYPES_REVERSE[prompt([{
                         'type': 'list',
                         'name': 'type',
-                        'message': f'Select type for panel {len(panels) + 1}:',
+                        'message': f'Select type for panel {num + 1}:',
                         'choices': displayed_panel_types
                     }])['type']]
 
@@ -200,7 +206,7 @@ captions and lines are no longer accepted.', fgc=3))  # yellow
                         text = prompt([{
                             'type': 'input',
                             'name': 'text',
-                            'message': f'Text for panel {len(panels) + 1}: (leave blank to abort)',
+                            'message': f'Text for panel {num + 1}: (leave blank to abort)',
                         }])['text']
                         if not text:
                             # return to 'print current panels /
@@ -226,8 +232,8 @@ captions and lines are no longer accepted.', fgc=3))  # yellow
         'validate': lambda s: bool(s)
     }])['saveto']
 
-    path=((o if search('\.(jpe?g|png)$', o, flags=I) else o + '.jpg')
-                    if o else 'meme.jpg')
+    path = ((o if search('\.(jpe?g|png)$', o, flags=I) else o + '.jpg')
+            if o else 'meme.jpg')
 
     MEMETHESIZERS[format](panels).save(path)
 
