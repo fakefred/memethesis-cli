@@ -8,7 +8,7 @@ from .meme.pooh import make_pooh
 from .meme.caption import make_caption
 from .meme.imageops import stack
 from .meme.separator import make_sep
-from re import search
+import re
 
 FORMATS = ['drake', 'brainsize', 'womanyelling', 'pooh']
 
@@ -228,11 +228,11 @@ captions and lines are no longer accepted.', fgc=3))  # yellow
     o = prompt([{
         'type': 'input',
         'name': 'saveto',
-        'message': f'Save meme to: (only .jpg supported)',
+        'message': f'Save meme to: (only .jpg and .png supported)',
         'validate': lambda s: bool(s)
     }])['saveto']
 
-    path = ((o if search('\.(jpe?g|png)$', o, flags=I) else o + '.jpg')
+    path = ((o if re.search('\.(jpe?g|png)$', o, flags=re.I) else o + '.jpg')
             if o else 'meme.jpg')
 
     MEMETHESIZERS[format](panels).save(path)
