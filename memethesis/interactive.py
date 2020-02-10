@@ -4,17 +4,19 @@ from .colorprint import color
 from .meme.drake import make_drake
 from .meme.brainsize import make_brainsize
 from .meme.woman_yelling import make_woman_yelling
+from .meme.pooh import make_pooh
 from .meme.caption import make_caption
 from .meme.imageops import stack
 from .meme.separator import make_sep
+from re import search
 
-FORMATS = ['drake', 'brainsize', 'womanyelling']
+FORMATS = ['drake', 'brainsize', 'womanyelling', 'pooh']
 
 PANEL_TYPES = {
     'drake': ['dislike', 'like'],
-    # 'brainsize': [i for i in range(1, 15)],
     'brainsize': list(range(1, 15)),
-    'womanyelling': ['woman', 'cat']
+    'womanyelling': ['woman', 'cat'],
+    'pooh': ['tired', 'wired']
 }
 
 DISP_TYPES = {
@@ -23,6 +25,8 @@ DISP_TYPES = {
     **dict([(sz, 'Brain size ' + str(sz)) for sz in range(1, 15)]),
     'woman': 'Woman yelling',
     'cat': 'Confused cat',
+    'tired': 'Regular Winnie the Pooh',
+    'wired': 'Tuxedo Winnie the Pooh',
     'caption': 'Caption',
     'sep': 'Horizontal line',
     'abort': '[abort: stop adding panels]'
@@ -33,7 +37,8 @@ DISP_TYPES_REVERSE = {v: k for k, v in DISP_TYPES.items()}
 MEMETHESIZERS = {
     'drake': make_drake,
     'brainsize': make_brainsize,
-    'womanyelling': make_woman_yelling
+    'womanyelling': make_woman_yelling,
+    'pooh': make_pooh
 }
 
 
@@ -221,7 +226,9 @@ captions and lines are no longer accepted.', fgc=3))  # yellow
         'validate': lambda s: bool(s)
     }])['saveto']
 
-    MEMETHESIZERS[format](panels).save((o if o.endswith('.jpg') else o + '.jpg')
-              if o else 'meme.jpg')
+    path=((o if search('\.(jpe?g|png)$', o, flags=I) else o + '.jpg')
+                    if o else 'meme.jpg')
 
-    print(color(f'Meme saved to {o}.', fgc=2))
+    MEMETHESIZERS[format](panels).save(path)
+
+    print(color(f'Meme saved to {path}.', fgc=2))
