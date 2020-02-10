@@ -4,12 +4,14 @@ from PyInquirer import prompt
 from .meme.drake import make_drake
 from .meme.brainsize import make_brainsize
 from .meme.woman_yelling import make_woman_yelling
+from .meme.pooh import make_pooh
 from .meme.caption import make_caption
 from .meme.imageops import stack
 from .meme.separator import make_sep
 from .interactive import interactive
+from re import search, I
 
-FORMATS = ['drake', 'brainsize', 'womanyelling']
+FORMATS = ['drake', 'brainsize', 'womanyelling', 'pooh']
 
 
 def main():
@@ -42,8 +44,7 @@ def main():
     drake_args.add_argument('--dislike', required=False)
     drake_args.add_argument('--like', required=False)
 
-    brainsize_args = argparser.add_argument_group(
-        'Brain Size (so many sizes thanks to Brian)')
+    brainsize_args = argparser.add_argument_group('Brain Size')
     for i in range(1, 15):
         brainsize_args.add_argument(
             '-s{}'.format(i), '--size{}'.format(i), required=False
@@ -52,6 +53,10 @@ def main():
     womanyelling_args = argparser.add_argument_group('Woman Yelling')
     womanyelling_args.add_argument('--woman', required=False)
     womanyelling_args.add_argument('--cat', required=False)
+
+    pooh_args = argparser.add_argument_group('Winnie the Pooh')
+    pooh_args.add_argument('--tired', required=False)
+    pooh_args.add_argument('--wired', required=False)
 
     args = argparser.parse_args()
 
@@ -62,7 +67,8 @@ def main():
 
         # validate format
         if not args.format:
-            print('Error: -f/--format needs to be specified.')
+            print(
+                'Error: requires either -i/--interactive to be present or -f/--format specified.')
             sys.exit(1)
         # make sure the meme to be generated has something else to be
         # other than an ephemeral spectre in the volatile RAM,
@@ -104,10 +110,19 @@ def main():
             else:
                 print('Error: Woman Yelling memes require both --woman and --cat.')
                 sys.exit(1)
+        elif args.format == 'pooh':
+            if args.tired and args.wired:
+                meme = make_pooh([
+                    ('tired', args.tired),
+                    ('wired', args.wired)
+                ])
+            else:
+                print('Error: Pooh memes requires both --tired and --wired.')
+                sys.exit(1)
 
         if args.caption:
             meme = stack([
-                make_caption(text=args.caption),
+                make_caption(text=args.caption, width=meme.size[0]),
                 make_sep(width=meme.size[0]),
                 meme
             ])
@@ -118,8 +133,10 @@ def main():
 
         if args.output:
             o = args.output
-            meme.save((o if o.endswith('.jpg') else o + '.jpg')
-                      if o else 'meme.jpg')
+            path = ((o if search('\.(jpe?g|png)$', o, flags=I) else o + '.jpg')
+                    if o else 'meme.jpg')
+            meme.save(path)
+            print(f'Meme saved to {path}.')
 
 
 if __name__ == '__main__':
