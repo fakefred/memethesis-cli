@@ -1,6 +1,6 @@
 from PIL import Image, ImageDraw, ImageFont
-from .caption import parse_caption, make_caption
-from .separator import is_sep, make_sep
+from .caption import make_caption
+from .separator import make_sep
 from .textops import make_text
 from .imageops import stack, lay
 import re
@@ -11,52 +11,11 @@ TRANSPARENT = (255, 255, 255, 0)
 
 TEXTSPACE = (480, 160)
 
-WOMAN = ':women_yelling: '  # this is the de facto emoji shortcode on m.t
-CAT = ':catto: '
 
-
-def parse_woman_yelling(content: str):
-    lines = content.splitlines()
-    entities = []  # tuples of (woman/cat, text)
-    is_woman_yelling = False
-
-    for line in lines:
-        # remove zero-width spaces and leading/trailing whitespace
-        naked_line = line.replace('\u200b', '').strip()
-        if (naked_line.startswith(WOMAN) and
-                naked_line.replace(WOMAN, '', 1).strip()):
-            entities.append((
-                'woman',
-                naked_line.replace(WOMAN, '', 1).strip()))
-            is_woman_yelling = True
-
-        elif (naked_line.startswith(CAT) and
-                naked_line.replace(CAT, '', 1).strip()):
-            entities.append((
-                'cat',
-                naked_line.replace(CAT, '', 1).strip()))
-            is_woman_yelling = True
-
-        elif not is_woman_yelling and parse_caption(naked_line) is not None:
-            # only allow captions and seps above woman and cat
-            entities.append((
-                'caption',
-                parse_caption(naked_line)
-            ))
-
-        elif not is_woman_yelling and is_sep(naked_line):
-            entities.append(('sep', ''))
-
-    if is_woman_yelling:
-        return entities
-
-    return None
-
-
-def make_woman_yelling(entities: list, emojis={},
+def make_woman_yelling(entities: list,
                        font=path.join(path.dirname(__file__),
                                       'res/fonts/NotoSans-Regular.ttf'),
-                       instance='', saveto='woman_yelling_output.jpg', stroke=False):
+                       saveto='woman_yelling_output.jpg', stroke=False):
     '''
     Procedure:
     1. for each body panel (woman/cat), stack its text and image, and
@@ -77,7 +36,7 @@ def make_woman_yelling(entities: list, emojis={},
         # entity = ('woman'/'cat', text)
         if entity[0] == 'woman':
             body_panels.append(stack([
-                make_caption(text=entity[1], emojis=emojis, instance=instance,
+                make_caption(text=entity[1],
                              width=woman_template.size[0], height=TEXTSPACE[1],
                              font=font, align='center', margin=20,
                              stroke=stroke),
@@ -87,7 +46,7 @@ def make_woman_yelling(entities: list, emojis={},
 
         elif entity[0] == 'cat':
             body_panels.append(stack([
-                make_caption(text=entity[1], emojis=emojis, instance=instance,
+                make_caption(text=entity[1],
                              width=cat_template.size[0], height=TEXTSPACE[1],
                              font=font, align='center', margin=20,
                              stroke=stroke),
@@ -103,9 +62,8 @@ def make_woman_yelling(entities: list, emojis={},
     for entity in entities:
         if entity[0] == 'caption':
             cap_seps.append(
-                make_caption(text=entity[1], emojis=emojis,
-                             instance=instance, width=meme_width, font=font,
-                             stroke=stroke)
+                make_caption(text=entity[1], width=meme_width,
+                             font=font, stroke=stroke)
             )
         elif entity[0] == 'sep':
             cap_seps.append(make_sep(width=meme_width))
