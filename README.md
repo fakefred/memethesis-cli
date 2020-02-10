@@ -1,5 +1,6 @@
 ```bash
 $ pip install memethesis
+$ memethesis -i  # interactive mode (try it)
 $ memethesis -h
 usage: memethesis [-h] [-i] [-f {drake,brainsize,womanyelling}] [-o OUTPUT] [-p] [-c CAPTION] [--dislike DISLIKE] [--like LIKE] [-s1 SIZE1]
                   [-s2 SIZE2] [-s3 SIZE3] [-s4 SIZE4] [-s5 SIZE5] [-s6 SIZE6] [-s7 SIZE7] [-s8 SIZE8] [-s9 SIZE9] [-s10 SIZE10] [-s11 SIZE11]
