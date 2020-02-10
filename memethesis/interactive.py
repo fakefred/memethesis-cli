@@ -1,6 +1,6 @@
 import sys
 from PyInquirer import prompt
-from .colorprint import color
+from .fancyprint import color, style
 from .meme.drake import make_drake
 from .meme.brainsize import make_brainsize
 from .meme.woman_yelling import make_woman_yelling
@@ -45,7 +45,7 @@ MEMETHESIZERS = {
 def panel_memory(panels: list) -> str:
     output = 'Current panels:\n'
     for i, p in enumerate(panels, 1):
-        output += f'{i}. {DISP_TYPES[p[0]]}: {p[1]}\n'
+        output += f'{i}. {style(DISP_TYPES[p[0]], sty=1)}: {p[1]}\n'
     return output
 
 

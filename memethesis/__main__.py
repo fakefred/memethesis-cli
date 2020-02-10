@@ -1,6 +1,6 @@
 from argparse import ArgumentParser
 import sys
-from .colorprint import color
+from .fancyprint import color
 from .meme.drake import make_drake
 from .meme.brainsize import make_brainsize
 from .meme.woman_yelling import make_woman_yelling
