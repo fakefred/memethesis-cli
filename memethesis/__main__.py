@@ -1,6 +1,6 @@
 from argparse import ArgumentParser
 import sys
-from PyInquirer import prompt
+from .colorprint import color
 from .meme.drake import make_drake
 from .meme.brainsize import make_brainsize
 from .meme.woman_yelling import make_woman_yelling
@@ -67,61 +67,72 @@ def main():
 
         # validate format
         if not args.format:
-            print(
-                'Error: requires either -i/--interactive to be present or -f/--format specified.')
+            print(color(
+                'Error: requires either -i/--interactive to be present or -f/--format specified.',
+                fgc=1))  # red
             sys.exit(1)
         # make sure the meme to be generated has something else to be
         # other than an ephemeral spectre in the volatile RAM,
         # like a file or some screen pixels
         if not args.preview and not args.output:
-            print('Error: either -p/--preview or -o/--output needs to be present.')
+            print(color(
+                'Error: either -p/--preview or -o/--output needs to be present.',
+                fgc=1))
             sys.exit(1)
 
         if args.format == 'drake':
             if args.dislike and args.like:
-                meme = make_drake([
+                meme=make_drake([
                     ('dislike', args.dislike),
                     ('like', args.like)
                 ])
             else:
-                print('Error: Drake memes require both --dislike and --like.')
+                print(color(
+                    'Error: Drake memes require both --dislike and --like.',
+                    fgc=1))
                 sys.exit(1)  # show user an error right in their face
 
         elif args.format == 'brainsize':
-            brain_args = [args.size1, args.size2, args.size3, args.size4,
+            brain_args=[args.size1, args.size2, args.size3, args.size4,
                           args.size5, args.size6, args.size7,
                           args.size8, args.size9, args.size10, args.size11,
                           args.size12, args.size13, args.size14]  # lifehack!
             if any(brain_args):
-                brains = []
+                brains=[]
                 for size, text in enumerate(brain_args, start=1):
                     if text is not None:
                         brains.append((size, text))
-                meme = make_brainsize(brains)
+                meme=make_brainsize(brains)
             else:
-                print('Error: Brain Size memes require at least one brain size')
+                print(color(
+                    'Error: Brain Size memes require at least one brain size',
+                    fgc=1))
                 sys.exit(1)
         elif args.format == 'womanyelling':
             if args.woman and args.cat:
-                meme = make_woman_yelling([
+                meme=make_woman_yelling([
                     ('woman', args.woman),
                     ('cat', args.cat)
                 ])
             else:
-                print('Error: Woman Yelling memes require both --woman and --cat.')
+                print(color(
+                    'Error: Woman Yelling memes require both --woman and --cat.',
+                    fgc=1))
                 sys.exit(1)
         elif args.format == 'pooh':
             if args.tired and args.wired:
-                meme = make_pooh([
+                meme=make_pooh([
                     ('tired', args.tired),
                     ('wired', args.wired)
                 ])
             else:
-                print('Error: Pooh memes requires both --tired and --wired.')
+                print(color(
+                    'Error: Pooh memes requires both --tired and --wired.',
+                    fgc=1))
                 sys.exit(1)
 
         if args.caption:
-            meme = stack([
+            meme=stack([
                 make_caption(text=args.caption, width=meme.size[0]),
                 make_sep(width=meme.size[0]),
                 meme
@@ -132,11 +143,11 @@ def main():
             meme.show(title='Memethesis Preview')
 
         if args.output:
-            o = args.output
-            path = ((o if search('\.(jpe?g|png)$', o, flags=I) else o + '.jpg')
+            o=args.output
+            path=((o if search('\.(jpe?g|png)$', o, flags=I) else o + '.jpg')
                     if o else 'meme.jpg')
             meme.save(path)
-            print(f'Meme saved to {path}.')
+            print(color(f'Meme saved to {path}.', fgc=2))
 
 
 if __name__ == '__main__':
