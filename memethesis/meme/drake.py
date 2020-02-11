@@ -11,8 +11,6 @@ TRANSPARENT = (255, 255, 255, 0)
 
 TEXTSPACE = (400, 250)
 
-# TODO: automate memetheses, with only template image and text spaces provided in csv
-
 
 def make_drake(drakes: list,
                font=path.join(path.dirname(__file__),

@@ -1,10 +1,8 @@
 from argparse import ArgumentParser
 import sys
 from .fancyprint import color
-from .meme.drake import make_drake
-from .meme.brainsize import make_brainsize
+from .meme.vertical import make_vertical
 from .meme.woman_yelling import make_woman_yelling
-from .meme.pooh import make_pooh
 from .meme.caption import make_caption
 from .meme.imageops import stack
 from .meme.separator import make_sep
@@ -82,7 +80,7 @@ def main():
 
         if args.format == 'drake':
             if args.dislike and args.like:
-                meme=make_drake([
+                meme = make_vertical('drake', [
                     ('dislike', args.dislike),
                     ('like', args.like)
                 ])
@@ -102,7 +100,7 @@ def main():
                 for size, text in enumerate(brain_args, start=1):
                     if text is not None:
                         brains.append((size, text))
-                meme=make_brainsize(brains)
+                meme=make_vertical('brainsize', brains)
             else:
                 print(color(
                     'Error: Brain Size memes require at least one brain size',
@@ -110,7 +108,7 @@ def main():
                 sys.exit(1)
         elif args.format == 'womanyelling':
             if args.woman and args.cat:
-                meme=make_woman_yelling([
+                meme=make_woman_yelling('', [
                     ('woman', args.woman),
                     ('cat', args.cat)
                 ])
@@ -121,7 +119,7 @@ def main():
                 sys.exit(1)
         elif args.format == 'pooh':
             if args.tired and args.wired:
-                meme=make_pooh([
+                meme=make_vertical('pooh', [
                     ('tired', args.tired),
                     ('wired', args.wired)
                 ])

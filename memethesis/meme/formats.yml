@@ -1,0 +1,96 @@
+drake:
+  composition: vertical
+  panels:
+    dislike:
+      description: Drake dislike
+      image: drake/drake_dislike.jpg
+      # [left, top, width, height]
+      textbox: [370, 12, 400, 250]
+    like:
+      description: Drake like
+      image: drake/drake_like.jpg
+      textbox: [370, 20, 400, 250]
+
+brainsize:
+  composition: vertical
+  panels:
+    1:
+      description: Brain size 1
+      image: brainsize/brain1.jpg
+      textbox: [10, 8, 380, 250]
+    2:
+      description: Brain size 2
+      image: brainsize/brain2.jpg
+      textbox: [10, 8, 380, 250]
+    3:
+      description: Brain size 3
+      image: brainsize/brain3.jpg
+      textbox: [10, 8, 380, 240]
+    4:
+      description: Brain size 4
+      image: brainsize/brain4.jpg
+      textbox: [10, 8, 380, 255]
+    5:
+      description: Brain size 5
+      image: brainsize/brain5.jpg
+      textbox: [10, 8, 380, 250]
+    6:
+      description: Brain size 6
+      image: brainsize/brain6.jpg
+      textbox: [10, 8, 380, 280]
+    7:
+      description: Brain size 7
+      image: brainsize/brain7.jpg
+      textbox: [10, 8, 380, 270]
+    8:
+      description: Brain size 8
+      image: brainsize/brain8.jpg
+      textbox: [10, 8, 380, 280]
+    9:
+      description: Brain size 9
+      image: brainsize/brain9.jpg
+      textbox: [10, 8, 380, 250]
+    10:
+      description: Brain size 10
+      image: brainsize/brain10.jpg
+      textbox: [10, 8, 380, 260]
+    11:
+      description: Brain size 11
+      image: brainsize/brain11.jpg
+      textbox: [10, 8, 380, 290]
+    12:
+      description: Brain size 12
+      image: brainsize/brain12.jpg
+      textbox: [10, 8, 380, 280]
+    13:
+      description: Brain size 13
+      image: brainsize/brain13.jpg
+      textbox: [10, 8, 380, 240]
+    14:
+      description: Brain size 14
+      image: brainsize/brain14.jpg
+      textbox: [10, 8, 380, 400]
+
+womanyelling:
+  composition: woman_yelling
+  # placeholder value
+  # womanyelling.py handles all processes for now.
+  panels:
+    woman:
+      description: Woman yelling
+      image: woman_yelling/taylor.jpg
+    cat:
+      description: Confused cat
+      image: woman_yelling/catto.jpg
+
+pooh:
+  composition: vertical
+  panels:
+    tired:
+      description: Regular Winnie the Pooh
+      image: pooh/tired.jpg
+      textbox: [370, 10, 300, 240]
+    wired:
+      description: Tuxedo Winnie the Pooh
+      image: pooh/wired.jpg
+      textbox: [370, 10, 300, 240]

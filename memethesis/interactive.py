@@ -1,51 +1,27 @@
 import sys
+import re
+import yaml
 from PyInquirer import prompt
 from .fancyprint import color, style
-from .meme.drake import make_drake
-from .meme.brainsize import make_brainsize
-from .meme.woman_yelling import make_woman_yelling
-from .meme.pooh import make_pooh
+from .memethesizers import *
 from .meme.caption import make_caption
 from .meme.imageops import stack
 from .meme.separator import make_sep
-import re
+from .format_utils import *
 
-FORMATS = ['drake', 'brainsize', 'womanyelling', 'pooh']
-
-PANEL_TYPES = {
-    'drake': ['dislike', 'like'],
-    'brainsize': list(range(1, 15)),
-    'womanyelling': ['woman', 'cat'],
-    'pooh': ['tired', 'wired']
-}
-
-DISP_TYPES = {
-    'dislike': 'Drake dislike',
-    'like': 'Drake like',
-    **dict([(sz, 'Brain size ' + str(sz)) for sz in range(1, 15)]),
-    'woman': 'Woman yelling',
-    'cat': 'Confused cat',
-    'tired': 'Regular Winnie the Pooh',
-    'wired': 'Tuxedo Winnie the Pooh',
-    'caption': 'Caption',
-    'sep': 'Horizontal line',
-    'abort': '[abort: stop adding panels]'
-}
-
-DISP_TYPES_REVERSE = {v: k for k, v in DISP_TYPES.items()}
-
-MEMETHESIZERS = {
-    'drake': make_drake,
-    'brainsize': make_brainsize,
-    'womanyelling': make_woman_yelling,
-    'pooh': make_pooh
-}
+FORMATS = read_formats()
+FMT_NAMES = FORMATS.keys()
+PANEL_TYPES = get_panel_types(FORMATS)
+DESCRIPTIONS = get_panel_descriptions(FORMATS)
+COMPOSITIONS = get_compositions(FORMATS)
+MEMETHESIZERS = {k: MEMETHESIZERS_BY_FORMAT[v]
+                 for k, v in COMPOSITIONS.items()}
 
 
 def panel_memory(panels: list) -> str:
     output = 'Current panels:\n'
     for i, p in enumerate(panels, 1):
-        output += f'{i}. {style(DISP_TYPES[p[0]], sty=1)}: {p[1]}\n'
+        output += f'{i}. {style(DESCRIPTIONS[p[0]], sty=1)}: {p[1]}\n'
     return output
 
 
@@ -55,7 +31,7 @@ def interactive():
         'type': 'list',
         'name': 'format',
         'message': 'Select meme format:',
-        'choices': FORMATS
+        'choices': FMT_NAMES
     }])['format']
 
     panel_types_of_format = PANEL_TYPES[format]
@@ -70,16 +46,16 @@ def interactive():
                                   (['caption', 'sep']
                                    if not reject_cap_and_sep else []) +
                                   ['abort'])
-        displayed_panel_types = [DISP_TYPES[k]
+        displayed_panel_types = [str(k) + ': ' + DESCRIPTIONS[k]
                                  for k in applicable_panel_types]
 
         # ask for panel type
-        panel_type = DISP_TYPES_REVERSE[prompt([{
+        panel_type = prompt([{
             'type': 'list',
             'name': 'type',
             'message': f'Select type for panel {len(panels) + 1}:',
             'choices': displayed_panel_types
-        }])['type']]
+        }])['type'].split(': ')[0]
 
         if panel_type == 'abort':
             break  # exit loop, proceed to panel editing
@@ -174,29 +150,29 @@ captions and lines are no longer accepted.', fgc=3))  # yellow
                     'validate': lambda s: bool(s)
                 }])['text']
             elif prop == 'Edit type':
-                panels[num - 1][0] = DISP_TYPES_REVERSE[prompt([{
+                panels[num - 1][0] = prompt([{
                     'type': 'list',
                     'name': 'type',
                     'message': f'Select type for panel:',
                     'choices': displayed_panel_types
                     # NOTE: for womanyelling, cap and sep stay rejected
-                }])['type']]
+                }])['type'].split(': ')[0]
             elif prop == 'Insert after':
                 applicable_panel_types = (panel_types_of_format +
                                           (['caption', 'sep']
                                            if not reject_cap_and_sep else []) +
                                           ['abort'])
-                displayed_panel_types = [DISP_TYPES[k]
+                displayed_panel_types = [DESCRIPTIONS[k]
                                          for k in applicable_panel_types]
                 new_panel_confirmed = False
                 while not new_panel_confirmed:
                     # ask for panel type
-                    panel_type = DISP_TYPES_REVERSE[prompt([{
+                    panel_type = prompt([{
                         'type': 'list',
                         'name': 'type',
                         'message': f'Select type for panel {num + 1}:',
                         'choices': displayed_panel_types
-                    }])['type']]
+                    }])['type'].split(': ')[0]
 
                     if panel_type == 'abort':
                         break  # exit loop, proceed to panel editing
@@ -235,6 +211,6 @@ captions and lines are no longer accepted.', fgc=3))  # yellow
     path = ((o if re.search('\.(jpe?g|png)$', o, flags=re.I) else o + '.jpg')
             if o else 'meme.jpg')
 
-    MEMETHESIZERS[format](panels).save(path)
+    MEMETHESIZERS[format](format, panels).save(path)
 
     print(color(f'Meme saved to {path}.', fgc=2))

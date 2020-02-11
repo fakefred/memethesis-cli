@@ -12,7 +12,7 @@ TRANSPARENT = (255, 255, 255, 0)
 TEXTSPACE = (480, 160)
 
 
-def make_woman_yelling(entities: list,
+def make_woman_yelling(format, entities: list,  # format is a dummy arg
                        font=path.join(path.dirname(__file__),
                                       'res/fonts/NotoSans-Regular.ttf'),
                        saveto='woman_yelling_output.jpg', stroke=False):
