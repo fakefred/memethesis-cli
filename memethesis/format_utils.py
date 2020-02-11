@@ -17,20 +17,27 @@ def read_formats() -> dict:
 
 
 def get_format_names(fmts: dict) -> list:
-    return fmts.keys()
+    return list(fmts.keys())
 
 
 def get_panel_types(fmts: dict) -> dict:
-    return {k: v['panels'].keys() for k, v in fmts.items()}
+    return {k: list(v['panels'].keys()) for k, v in fmts.items()}
 
 
 def get_panel_descriptions(fmts: dict) -> dict:
-    return {
+    descrips = {
         fk: {
             pk: pv['description']
             for pk, pv in fv['panels'].items()
         } for fk, fv in fmts.items()
     }
+
+    for fk in descrips.keys():
+        descrips[fk]['caption'] = 'Caption'
+        descrips[fk]['sep'] = 'Horizontal line'
+        descrips[fk]['abort'] = '[stop adding panels]'
+
+    return descrips
 
 
 def get_compositions(fmts: dict) -> dict:

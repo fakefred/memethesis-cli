@@ -49,12 +49,12 @@ def make_vertical(format: str, entities: list,
         elif ent[0] == 'caption':
             generated_panels.append(
                 make_caption(text=ent[1], font=font, stroke=stroke,
-                             width=templates.values[0].size()[0]))
+                             width=list(templates.values())[0].size[0]))
             # assumes constant widths
 
         elif ent[0] == 'sep':
             generated_panels.append(
-                make_sep(width=templates.values[0].size()[0]))
+                make_sep(width=list(templates.values())[0].size[0]))
 
     meme = stack(generated_panels)
     return meme

@@ -18,23 +18,23 @@ MEMETHESIZERS = {k: MEMETHESIZERS_BY_FORMAT[v]
                  for k, v in COMPOSITIONS.items()}
 
 
-def panel_memory(panels: list) -> str:
+def panel_memory(panels: list, fmt: str) -> str:
     output = 'Current panels:\n'
     for i, p in enumerate(panels, 1):
-        output += f'{i}. {style(DESCRIPTIONS[p[0]], sty=1)}: {p[1]}\n'
+        output += f'{i}. {style(DESCRIPTIONS[fmt][p[0]], sty=1)}: {p[1]}\n'
     return output
 
 
 def interactive():
     # ask for format
-    format = prompt([{
+    fmt = prompt([{
         'type': 'list',
         'name': 'format',
         'message': 'Select meme format:',
         'choices': FMT_NAMES
     }])['format']
 
-    panel_types_of_format = PANEL_TYPES[format]
+    panel_types_of_format = PANEL_TYPES[fmt]
 
     panels = []
     # cap and sep are rejected after woman/cat panel.
@@ -46,7 +46,7 @@ def interactive():
                                   (['caption', 'sep']
                                    if not reject_cap_and_sep else []) +
                                   ['abort'])
-        displayed_panel_types = [str(k) + ': ' + DESCRIPTIONS[k]
+        displayed_panel_types = [str(k) + ': ' + DESCRIPTIONS[fmt][k]
                                  for k in applicable_panel_types]
 
         # ask for panel type
@@ -79,7 +79,7 @@ captions and lines are no longer accepted.', fgc=3))  # yellow
             reject_cap_and_sep = True
 
         panels.append([panel_type, text])
-        print(panel_memory(panels))
+        print(panel_memory(panels, fmt))
 
         loop = prompt([{
             'type': 'confirm',
@@ -99,7 +99,7 @@ captions and lines are no longer accepted.', fgc=3))  # yellow
     loop = True
     while loop:
         print('This is a list of panels you have added to your meme:')
-        print(panel_memory(panels))
+        print(panel_memory(panels, fmt))
         preview = prompt([{
             'type': 'confirm',
             'name': 'preview',
@@ -107,7 +107,7 @@ captions and lines are no longer accepted.', fgc=3))  # yellow
             'default': True
         }])['preview']
         if preview:
-            MEMETHESIZERS[format](panels).show()
+            MEMETHESIZERS[fmt](fmt, panels).show()
 
         loop = prompt([{
             'type': 'confirm',
@@ -153,7 +153,7 @@ captions and lines are no longer accepted.', fgc=3))  # yellow
                 panels[num - 1][0] = prompt([{
                     'type': 'list',
                     'name': 'type',
-                    'message': f'Select type for panel:',
+                    'message': f'Select type for panel {num}:',
                     'choices': displayed_panel_types
                     # NOTE: for womanyelling, cap and sep stay rejected
                 }])['type'].split(': ')[0]
@@ -162,7 +162,7 @@ captions and lines are no longer accepted.', fgc=3))  # yellow
                                           (['caption', 'sep']
                                            if not reject_cap_and_sep else []) +
                                           ['abort'])
-                displayed_panel_types = [DESCRIPTIONS[k]
+                displayed_panel_types = [str(k) + ': ' + DESCRIPTIONS[fmt][k]
                                          for k in applicable_panel_types]
                 new_panel_confirmed = False
                 while not new_panel_confirmed:
@@ -192,7 +192,7 @@ captions and lines are no longer accepted.', fgc=3))  # yellow
                         text = ''
 
                     panels = panels[:num] + [[panel_type, text]] + panels[num:]
-                    print(panel_memory(panels))
+                    print(panel_memory(panels, fmt))
                     new_panel_confirmed = True
 
             elif prop == 'Remove':
@@ -211,6 +211,6 @@ captions and lines are no longer accepted.', fgc=3))  # yellow
     path = ((o if re.search('\.(jpe?g|png)$', o, flags=re.I) else o + '.jpg')
             if o else 'meme.jpg')
 
-    MEMETHESIZERS[format](format, panels).save(path)
+    MEMETHESIZERS[fmt](fmt, panels).save(path)
 
     print(color(f'Meme saved to {path}.', fgc=2))
