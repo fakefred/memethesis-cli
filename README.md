@@ -50,7 +50,17 @@ Or when updating:
 $ pip install memethesis==<latest_version> --upgrade
 ```
 
+Installing from git repository:
+
+```bash
+$ python setup.py bdist_wheel  # will generate .whl
+$ pip install dist/memethesis-[something].whl
+```
+
 ### Usage
+
+> This part assumes you have a working python 3.x environment,
+> which `python` refers to. If your OS uses `python3`, you are smart enough.
 
 ```bash
 $ memethesis -i  # interactive mode (try it)
@@ -112,4 +122,15 @@ pigeon:
 draw25:
   --do DO
   --guy GUY
+```
+
+## Debugging
+
+```bash
+[make edits]
+# to test by running module
+$ python -m memethesis.__main__ [args]
+# to test by installing wheel
+$ python setup.py bdist_wheel  # will generate .whl
+$ pip install dist/memethesis-[something].whl
 ```
