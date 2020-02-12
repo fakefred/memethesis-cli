@@ -10,10 +10,12 @@ from .meme.separator import make_sep
 from .format_utils import *
 
 FORMATS = read_formats()
-FMT_NAMES = FORMATS.keys()
+COMPOSITIONS = get_compositions(FORMATS)
+FMT_NAMES = filter(  # single panel memes don't deserve interactive mode
+    lambda f: not COMPOSITIONS[f] == 'single',
+    get_format_names(FORMATS))
 PANEL_TYPES = get_panel_types(FORMATS)
 DESCRIPTIONS = get_panel_descriptions(FORMATS)
-COMPOSITIONS = get_compositions(FORMATS)
 MEMETHESIZERS = {k: MEMETHESIZERS_BY_FORMAT[v]
                  for k, v in COMPOSITIONS.items()}
 

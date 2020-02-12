@@ -76,16 +76,17 @@ def main():
 
         fmt = args['format']
         memethesizer = MEMETHESIZERS[fmt]
-
         meme = memethesizer(
             # all the tuples with flags provided by formats.yml
             # are added to the list as (flag, value)
             # as a result, there are flags that are not populated.
             # to eliminate such "blank" tuples,
             # we run a filter against the list above.
+            # NOTE: argparse gives us --flag-with-dashes
+            # as args['flag_with_dashes']
             fmt, filter(lambda tup: bool(tup[1]),
-                        [(n, args[n]) for n in PANEL_TYPES[fmt]]
-                        ))
+                        [(n, args[n.replace('-', '_')])
+                         for n in PANEL_TYPES[fmt]]))
 
         if args['caption']:
             meme = stack([
