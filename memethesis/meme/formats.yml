@@ -1,5 +1,6 @@
 drake:
   composition: vertical
+  requires: all
   panels:
     dislike:
       description: Drake dislike
@@ -13,66 +14,68 @@ drake:
 
 brainsize:
   composition: vertical
+  requires: any
   panels:
-    1:
+    s1:
       description: Brain size 1
       image: brainsize/brain1.jpg
       textbox: [10, 8, 380, 250]
-    2:
+    s2:
       description: Brain size 2
       image: brainsize/brain2.jpg
       textbox: [10, 8, 380, 250]
-    3:
+    s3:
       description: Brain size 3
       image: brainsize/brain3.jpg
       textbox: [10, 8, 380, 240]
-    4:
+    s4:
       description: Brain size 4
       image: brainsize/brain4.jpg
       textbox: [10, 8, 380, 255]
-    5:
+    s5:
       description: Brain size 5
       image: brainsize/brain5.jpg
       textbox: [10, 8, 380, 250]
-    6:
+    s6:
       description: Brain size 6
       image: brainsize/brain6.jpg
       textbox: [10, 8, 380, 280]
-    7:
+    s7:
       description: Brain size 7
       image: brainsize/brain7.jpg
       textbox: [10, 8, 380, 270]
-    8:
+    s8:
       description: Brain size 8
       image: brainsize/brain8.jpg
       textbox: [10, 8, 380, 280]
-    9:
+    s9:
       description: Brain size 9
       image: brainsize/brain9.jpg
       textbox: [10, 8, 380, 250]
-    10:
+    s10:
       description: Brain size 10
       image: brainsize/brain10.jpg
       textbox: [10, 8, 380, 260]
-    11:
+    s11:
       description: Brain size 11
       image: brainsize/brain11.jpg
       textbox: [10, 8, 380, 290]
-    12:
+    s12:
       description: Brain size 12
       image: brainsize/brain12.jpg
       textbox: [10, 8, 380, 280]
-    13:
+    s13:
       description: Brain size 13
       image: brainsize/brain13.jpg
       textbox: [10, 8, 380, 240]
-    14:
+    s14:
       description: Brain size 14
       image: brainsize/brain14.jpg
       textbox: [10, 8, 380, 400]
 
 womanyelling:
   composition: horizontal
+  requires: all
   panels:
     woman:
       description: Woman yelling
@@ -85,6 +88,7 @@ womanyelling:
 
 pooh:
   composition: vertical
+  requires: all
   panels:
     tired:
       description: Regular Winnie the Pooh
