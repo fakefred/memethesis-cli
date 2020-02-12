@@ -72,16 +72,16 @@ brainsize:
       textbox: [10, 8, 380, 400]
 
 womanyelling:
-  composition: woman_yelling
-  # placeholder value
-  # womanyelling.py handles all processes for now.
+  composition: horizontal
   panels:
     woman:
       description: Woman yelling
       image: woman_yelling/taylor.jpg
+      textbox: [10, 10, 480, 150]
     cat:
       description: Confused cat
       image: woman_yelling/catto.jpg
+      textbox: [10, 10, 480, 150]
 
 pooh:
   composition: vertical

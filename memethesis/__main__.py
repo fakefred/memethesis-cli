@@ -1,15 +1,20 @@
 from argparse import ArgumentParser
 import sys
 from .fancyprint import color
+from .memethesizers import *
+from .format_utils import *
 from .meme.vertical import make_vertical
-from .meme.woman_yelling import make_woman_yelling
+from .meme.horizontal import make_horizontal
 from .meme.caption import make_caption
 from .meme.imageops import stack
 from .meme.separator import make_sep
 from .interactive import interactive
 from re import search, I
 
-FORMATS = ['drake', 'brainsize', 'womanyelling', 'pooh']
+FORMATS = read_formats()
+FMT_NAMES = get_format_names(FORMATS)
+MEMETHESIZERS = {k: MEMETHESIZERS_BY_FORMAT[v]
+                 for k, v in get_compositions(FORMATS).items()}
 
 
 def main():
@@ -21,8 +26,8 @@ def main():
         help='interactive mode'
     )
     argparser.add_argument(
-        '-f', '--format', choices=FORMATS,
-        help=f'the meme format to use (Supported: {", ".join(FORMATS)})'
+        '-f', '--format', choices=FMT_NAMES,
+        help=f'the meme format to use (Supported: {", ".join(FMT_NAMES)})'
     )
     argparser.add_argument(
         '-o', '--output',
@@ -91,16 +96,16 @@ def main():
                 sys.exit(1)  # show user an error right in their face
 
         elif args.format == 'brainsize':
-            brain_args=[args.size1, args.size2, args.size3, args.size4,
+            brain_args = [args.size1, args.size2, args.size3, args.size4,
                           args.size5, args.size6, args.size7,
                           args.size8, args.size9, args.size10, args.size11,
                           args.size12, args.size13, args.size14]  # lifehack!
             if any(brain_args):
-                brains=[]
+                brains = []
                 for size, text in enumerate(brain_args, start=1):
                     if text is not None:
                         brains.append((size, text))
-                meme=make_vertical('brainsize', brains)
+                meme = make_vertical('brainsize', brains)
             else:
                 print(color(
                     'Error: Brain Size memes require at least one brain size',
@@ -108,7 +113,7 @@ def main():
                 sys.exit(1)
         elif args.format == 'womanyelling':
             if args.woman and args.cat:
-                meme=make_woman_yelling('', [
+                meme = make_horizontal('womanyelling', [
                     ('woman', args.woman),
                     ('cat', args.cat)
                 ])
@@ -119,7 +124,7 @@ def main():
                 sys.exit(1)
         elif args.format == 'pooh':
             if args.tired and args.wired:
-                meme=make_vertical('pooh', [
+                meme = make_vertical('pooh', [
                     ('tired', args.tired),
                     ('wired', args.wired)
                 ])
@@ -130,7 +135,7 @@ def main():
                 sys.exit(1)
 
         if args.caption:
-            meme=stack([
+            meme = stack([
                 make_caption(text=args.caption, width=meme.size[0]),
                 make_sep(width=meme.size[0]),
                 meme
@@ -141,8 +146,8 @@ def main():
             meme.show(title='Memethesis Preview')
 
         if args.output:
-            o=args.output
-            path=((o if search('\.(jpe?g|png)$', o, flags=I) else o + '.jpg')
+            o = args.output
+            path = ((o if search('\.(jpe?g|png)$', o, flags=I) else o + '.jpg')
                     if o else 'meme.jpg')
             meme.save(path)
             print(color(f'Meme saved to {path}.', fgc=2))
