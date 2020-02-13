@@ -63,65 +63,31 @@ $ pip install dist/memethesis-[something].whl
 > which `python` refers to. If your OS uses `python3`, you are smart enough.
 
 ```bash
-$ memethesis -i  # interactive mode (try it)
 $ memethesis -h
-usage: __main__.py [-h] [-i]
-                   [-f {drake,brainsize,womanyelling,pooh,pigeon,draw25}]
-                   [-o OUTPUT] [-p] [-c CAPTION]
-                   [--dislike DISLIKE] [--like LIKE]
-                   [--s1 S1] [--s2 S2] [--s3 S3] [--s4 S4]
-                   [--s5 S5] [--s6 S6] [--s7 S7] [--s8 S8]
-                   [--s9 S9] [--s10 S10] [--s11 S11]
-                   [--s12 S12] [--s13 S13] [--s14 S14]
-                   [--woman WOMAN] [--cat CAT]
-                   [--tired TIRED] [--wired WIRED]
-                   [--katori KATORI] [--butterfly BUTTERFLY]
-                   [--is-this-a IS_THIS_A] [--do DO]
-                   [--guy GUY]
+Memethesis CLI - All Your Memes Are Belong To Us!
 
-All Your Memes Are Belong To Us!
-
-optional arguments:
+arguments:
   -h, --help            show this help message and exit
-  -i, --interactive     interactive mode
-  -f {drake,brainsize,womanyelling,pooh,pigeon,draw25}, --format {drake,brainsize,womanyelling,pooh,pigeon,draw25}
-                        the meme format to use (Supported:
-                        drake, brainsize, womanyelling, pooh,
-                        pigeon, draw25)
-  -o OUTPUT, --output OUTPUT
-                        the filename to save the meme as
-                        (default: ./meme.jpg)
-  -p, --preview         display the meme without saving it,
+  -l, --list            show a list of meme formats and exit
+  -i, --interactive     interactive mode (certain formats only)
+
+  -f, --format FORMAT   the meme format to use
+  -c, --caption CAPTION caption text to add above your meme
+
+  -o, --output OUTPUT   save the meme as (jpg/png)
+  -p, --preview         display meme without saving it,
                         unless -o/--output is specified
-  -c CAPTION, --caption CAPTION
-                        caption text to add above your meme
 
-drake:
-  --dislike DISLIKE
-  --like LIKE
+usage:
+  # command mode
+  $ memethesis -f FORMAT [-p|-o filename] --flag0 TEXT0 --flag1 TEXT1 ...
 
-brainsize:
-  --s1 S1
-  --s2 S2
-  ...
-  --s14 S14
+  # remember to wrap spaced strings in quotes
+  # example:
+  $ memethesis -f drake -o meme.png --dislike 'one thing' --like 'another thing'
 
-womanyelling:
-  --woman WOMAN
-  --cat CAT
-
-pooh:
-  --tired TIRED
-  --wired WIRED
-
-pigeon:
-  --katori KATORI
-  --butterfly BUTTERFLY
-  --is-this-a IS_THIS_A
-
-draw25:
-  --do DO
-  --guy GUY
+  # interactive mode
+  $ memethesis -i
 ```
 
 ## Debugging
