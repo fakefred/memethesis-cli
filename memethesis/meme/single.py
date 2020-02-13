@@ -46,7 +46,7 @@ def make_single(format: str, entities: list, cmdfont=None):
                 style = (meta['style']
                          if 'style' in meta else global_style)
             else:
-                font = cmdfont
+                font = get_fontpath(cmdfont)
                 style = 'stroke' if cmdfont in IMPLY_STROKE else ''
 
             text = make_text(
