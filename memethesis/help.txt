@@ -7,6 +7,7 @@ arguments:
 
   -f, --format FORMAT   the meme format to use
   -c, --caption CAPTION caption text to add above your meme
+  --font FONT           the font to use for body panels
 
   -o, --output OUTPUT   save the meme as (jpg/png)
   -p, --preview         display meme without saving it,
