@@ -1,9 +1,10 @@
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
 import yaml
 from ..fancyprint import color
 from .caption import make_caption
 from .separator import make_sep
 from .textops import make_text
+from ..fonts import get_fontpath
 from .imageops import stack
 from ..format_utils import read_formats
 from os import path
@@ -16,8 +17,7 @@ TRANSPARENT = (255, 255, 255, 0)
 
 
 def make_vertical(format: str, entities: list,
-                  font=path.join(path.dirname(__file__),
-                                 'res/fonts/NotoSans-Regular.ttf'),
+                  font=get_fontpath('notosans'),
                   saveto='vertical_output.jpg', stroke=False):
     format_info = FORMATS[format]
     if not format_info['composition'] == 'vertical':
@@ -27,34 +27,44 @@ def make_vertical(format: str, entities: list,
         sys.exit(1)
 
     panels = format_info['panels']
-    templates = {k: Image.open(
-        path.join(path.dirname(__file__), "res/template", v["image"])
-    ) for k, v in panels.items()}
-    textboxes = {k: v['textbox'] for k, v in panels.items()}
-    # textboxes[i] = [left top width height]
 
+    global_font = get_fontpath(
+        format_info['font'] if 'font' in format_info
+        else 'notosans')
+    global_style = format_info['style'] if 'style' in format_info else None
+
+    meme_width = Image.open(path.join(  # width of an arbitrary panel
+        path.dirname(__file__), 'res/template',
+        list(panels.values())[0]['image'])).size[0]
     generated_panels = []
 
-    for ent in entities:
-        # ent = (identifier, text) or its list equivalent
-        if ent[0] in panels.keys():
-            # Image.paste() overwrites Image
-            temp = templates[ent[0]].copy()
+    for name, text in entities:
+        # (identifier, text) or its list equivalent
+        if name in panels.keys():
+            meta = panels[name]
+            style = (meta['style']
+                     if 'style' in meta else global_style)
+            font = (get_fontpath(meta['font'])
+                    if 'font' in meta else global_font)
+
+            temp = Image.open(path.join(
+                path.dirname(__file__),
+                'res/template', meta['image']))
+
             text = make_text(
-                ent[1], box=textboxes[ent[0]][2:], font_path=font,
-                stroke=BLACK if stroke else None)
-            temp.paste(text, box=textboxes[ent[0]][:2], mask=text)
+                text, box=meta['textbox'][2:], font_path=font,
+                stroke=BLACK if style == 'stroke' else None)
+            temp.paste(text, box=meta['textbox'][:2], mask=text)
             generated_panels.append(temp)
 
-        elif ent[0] == 'caption':
-            generated_panels.append(
-                make_caption(text=ent[1], font=font, stroke=stroke,
-                             width=list(templates.values())[0].size[0]))
+        elif name == 'caption':
             # assumes constant widths
-
-        elif ent[0] == 'sep':
             generated_panels.append(
-                make_sep(width=list(templates.values())[0].size[0]))
+                make_caption(text=text, width=meme_width, font=global_font,
+                             stroke=BLACK if global_style == 'stroke' else None))
 
-    meme = stack(generated_panels)
-    return meme
+        elif name == 'sep':
+            generated_panels.append(
+                make_sep(width=meme_width))
+
+    return stack(generated_panels)

@@ -13,8 +13,6 @@ from re import search, I
 
 FORMATS = read_formats()
 FMT_NAMES = get_format_names(FORMATS)
-MEMETHESIZERS = {k: MEMETHESIZERS_BY_FORMAT[v]
-                 for k, v in get_compositions(FORMATS).items()}
 PANEL_TYPES = get_panel_types(FORMATS)
 
 
@@ -28,7 +26,7 @@ def main():
     )
     argparser.add_argument(
         '-f', '--format', choices=FMT_NAMES,
-        help=f'the meme format to use (Supported: {", ".join(FMT_NAMES)})'
+        help=f'the meme format to use'
     )
     argparser.add_argument(
         '-o', '--output',
@@ -75,25 +73,22 @@ def main():
             sys.exit(1)
 
         fmt = args['format']
-        memethesizer = MEMETHESIZERS[fmt]
-        meme = memethesizer(
-            # all the tuples with flags provided by formats.yml
-            # are added to the list as (flag, value)
-            # as a result, there are flags that are not populated.
-            # to eliminate such "blank" tuples,
-            # we run a filter against the list above.
-            # NOTE: argparse gives us --flag-with-dashes
-            # as args['flag_with_dashes']
-            fmt, filter(lambda tup: bool(tup[1]),
+
+        # all the tuples with flags provided by formats.yml
+        # are added to the list as (flag, value)
+        # as a result, there are flags that are not populated.
+        # to eliminate such "blank" tuples,
+        # we run a filter against the list above.
+        panels = list(filter(lambda tup: bool(tup[1]),
                         [(n, args[n.replace('-', '_')])
                          for n in PANEL_TYPES[fmt]]))
+        # NOTE: argparse gives us --flag-with-dashes
+        # as args['flag_with_dashes']
 
         if args['caption']:
-            meme = stack([
-                make_caption(text=args['caption'], width=meme.size[0]),
-                make_sep(width=meme.size[0]),
-                meme
-            ])
+            panels = [('caption', args['caption']), ('sep', None)] + panels
+
+        meme = MEMETHESIZERS[fmt](fmt, panels)
 
         if args['preview']:
             # uses PIL to preview the meme with ImageMagick

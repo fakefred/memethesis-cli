@@ -16,8 +16,6 @@ FMT_NAMES = filter(  # single panel memes don't deserve interactive mode
     get_format_names(FORMATS))
 PANEL_TYPES = get_panel_types(FORMATS)
 DESCRIPTIONS = get_panel_descriptions(FORMATS)
-MEMETHESIZERS = {k: MEMETHESIZERS_BY_FORMAT[v]
-                 for k, v in COMPOSITIONS.items()}
 
 
 def panel_memory(panels: list, fmt: str) -> str:

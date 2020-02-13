@@ -98,33 +98,29 @@ pooh:
 pigeon:
   composition: single
   image: is_this_a_pigeon/is_this_a_pigeon.jpg
+  font: impact
   panels:
     # actually only one panel;
     # the textboxes' names go in here instead
     katori:
-      # descriptions in single-panel memes are not actually used
-      # kept for humans only
       description: Katori (the guy)  
-      textbox: [150, 80, 220, 100]
+      textbox: [150, 80, 220, 80]
       style: stroke
     butterfly:
       description: Butterfly
-      textbox: [550, 100, 150, 100]
+      textbox: [550, 100, 150, 80]      
       style: stroke
     is-this-a:
       description: Is this a ...?
-      textbox: [60, 450, 625, 60]
+      textbox: [60, 450, 625, 80]
       style: stroke
 
 draw25:
   composition: single
   image: draw_25_or_do_sth/draw_25_or_do_sth.jpg
+  font: impact
   panels:
-    # actually only one panel;
-    # the textboxes' names go in here instead
     do:
-      # descriptions in single-panel memes are not actually used
-      # kept for humans only
       description: Do sth
       textbox: [90, 150, 150, 100]
       style: stroke

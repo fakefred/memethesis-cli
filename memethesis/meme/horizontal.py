@@ -1,9 +1,10 @@
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
 import yaml
 from ..fancyprint import color
 from .caption import make_caption
 from .separator import make_sep
 from .textops import make_text
+from ..fonts import get_fontpath
 from .imageops import stack, lay
 from ..format_utils import read_formats
 from os import path
@@ -15,10 +16,7 @@ BLACK = (0, 0, 0, 255)
 TRANSPARENT = (255, 255, 255, 0)
 
 
-def make_horizontal(format, entities: list,
-                    font=path.join(path.dirname(__file__),
-                                   'res/fonts/NotoSans-Regular.ttf'),
-                    saveto='horizontal_output.jpg', stroke=False):
+def make_horizontal(format, entities: list):
     format_info = FORMATS[format]
     if not format_info['composition'] == 'horizontal':
         print(color(
@@ -27,20 +25,30 @@ def make_horizontal(format, entities: list,
         sys.exit(1)
 
     panels = format_info['panels']
-    templates = {k: Image.open(
-        path.join(path.dirname(__file__), "res/template", v["image"])
-    ) for k, v in panels.items()}
-    textboxes = {k: v['textbox'] for k, v in panels.items()}
+
+    global_font = get_fontpath(
+        format_info['font'] if 'font' in format_info
+        else 'notosans')
+    global_style = format_info['style'] if 'style' in format_info else None
 
     body_panels = []
 
-    for ent in entities:
-        if ent[0] in panels.keys():
-            temp = templates[ent[0]].copy()
+    for name, text in entities:
+        if name in panels.keys():
+            meta = panels[name]
+            style = (meta['style']
+                     if 'style' in meta else global_style)
+            font = (get_fontpath(meta['font'])
+                    if 'font' in meta else global_font)
+
+            temp = Image.open(path.join(
+                path.dirname(__file__),
+                'res/template', meta['image']))
+
             text = make_text(
-                ent[1], box=textboxes[ent[0]][2:], font_path=font,
-                stroke=BLACK if stroke else None)
-            temp.paste(text, box=textboxes[ent[0]][:2], mask=text)
+                text, box=meta['textbox'][2:], font_path=font,
+                stroke=BLACK if style == 'stroke' else None)
+            temp.paste(text, box=meta['textbox'][:2], mask=text)
             body_panels.append(temp)
 
     body = lay(body_panels)
@@ -49,13 +57,13 @@ def make_horizontal(format, entities: list,
     # until now the meme width had been unknown
     # now we can make caps and seps
     cap_seps = []
-    for ent in entities:
-        if ent[0] == 'caption':
+    for name, text in entities:
+        if name == 'caption':
             cap_seps.append(
-                make_caption(text=ent[1], width=meme_width,
-                             font=font, stroke=stroke)
+                make_caption(text=text, width=meme_width, font=global_font,
+                             stroke=BLACK if global_style == 'stroke' else None)
             )
-        elif ent[0] == 'sep':
+        elif name == 'sep':
             cap_seps.append(make_sep(width=meme_width))
 
     meme = stack(cap_seps + [body])
