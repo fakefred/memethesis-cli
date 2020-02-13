@@ -4,7 +4,7 @@ from ..fancyprint import color
 from .caption import make_caption
 from .separator import make_sep
 from .textops import make_text
-from ..fonts import get_fontpath
+from ..fonts import *
 from .imageops import stack, lay
 from ..format_utils import read_formats
 from os import path
@@ -16,7 +16,7 @@ BLACK = (0, 0, 0, 255)
 TRANSPARENT = (255, 255, 255, 0)
 
 
-def make_horizontal(format, entities: list):
+def make_horizontal(format, entities: list, cmdfont=None):
     format_info = FORMATS[format]
     if not format_info['composition'] == 'horizontal':
         print(color(
@@ -36,10 +36,15 @@ def make_horizontal(format, entities: list):
     for name, text in entities:
         if name in panels.keys():
             meta = panels[name]
-            style = (meta['style']
-                     if 'style' in meta else global_style)
-            font = (get_fontpath(meta['font'])
-                    if 'font' in meta else global_font)
+
+            if not cmdfont:
+                font = (get_fontpath(meta['font'])
+                        if 'font' in meta else global_font)
+                style = (meta['style']
+                         if 'style' in meta else global_style)
+            else:
+                font = get_fontpath(cmdfont)
+                style = 'stroke' if cmdfont in IMPLY_STROKE else ''
 
             temp = Image.open(path.join(
                 path.dirname(__file__),

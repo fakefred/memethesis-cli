@@ -5,6 +5,7 @@ from os import path
 from .fancyprint import color, style
 from .memethesizers import *
 from .format_utils import *
+from .fonts import *
 from .interactive import interactive
 
 FORMATS = read_formats()
@@ -29,6 +30,7 @@ def main():
         '-p', '--preview', action='store_true')
     argparser.add_argument(
         '-c', '--caption')
+    argparser.add_argument('--font')
 
     # parse flags from formats.yml
     for fk, fv in PANEL_TYPES.items():
@@ -81,6 +83,12 @@ def main():
                 'Error: either -p/--preview or -o/--output needs to be present.',
                 fgc=1))
             sys.exit(1)
+        # ensure font exists
+        if args['font'] and not args['font'] in FONTS:
+            print(color(
+                'Error: font does not exist.',
+                fgc=1))
+            sys.exit(1)
 
         fmt = args['format']
 
@@ -98,7 +106,7 @@ def main():
         if args['caption']:
             panels = [('caption', args['caption']), ('sep', None)] + panels
 
-        meme = MEMETHESIZERS[fmt](fmt, panels)
+        meme = MEMETHESIZERS[fmt](fmt, panels, cmdfont=args['font'])
 
         if args['preview']:
             # uses PIL to preview the meme with ImageMagick

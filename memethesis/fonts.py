@@ -7,6 +7,7 @@ FONTS = {
     'comicsans': 'ComicSans.ttf'
 }
 
+IMPLY_STROKE = ['impact']
 
 def get_fontpath(name: str):
     return path.join(

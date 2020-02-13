@@ -4,7 +4,7 @@ from ..fancyprint import color
 from .caption import make_caption
 from .separator import make_sep
 from .textops import make_text
-from ..fonts import get_fontpath
+from ..fonts import *
 from .imageops import stack
 from ..format_utils import read_formats
 from os import path
@@ -16,7 +16,7 @@ BLACK = (0, 0, 0, 255)
 TRANSPARENT = (255, 255, 255, 0)
 
 
-def make_single(format: str, entities: list):
+def make_single(format: str, entities: list, cmdfont=None):
     format_info = FORMATS[format]
     if not format_info['composition'] == 'single':
         print(color(
@@ -40,10 +40,14 @@ def make_single(format: str, entities: list):
             meta = panel[name]
             position = meta['textbox']
 
-            font = (get_fontpath(meta['font'])
-                    if 'font' in meta else global_font)
-            style = (meta['style']
-                     if 'style' in meta else global_style)
+            if not cmdfont:
+                font = (get_fontpath(meta['font'])
+                        if 'font' in meta else global_font)
+                style = (meta['style']
+                         if 'style' in meta else global_style)
+            else:
+                font = cmdfont
+                style = 'stroke' if cmdfont in IMPLY_STROKE else ''
 
             text = make_text(
                 text, box=position[2:], font_path=font,
@@ -54,6 +58,7 @@ def make_single(format: str, entities: list):
 
         elif name == 'caption':
             layers.append(
+                # TODO: `stroke` here should conform to cmdfont
                 make_caption(text=text, width=template.size[0], font=global_font,
                              stroke=BLACK if global_style == 'stroke' else None))
 

@@ -104,7 +104,7 @@ captions and lines are no longer accepted.', fgc=3))  # yellow
             'default': True
         }])['preview']
         if preview:
-            MEMETHESIZERS[fmt](fmt, panels).show()
+            MEMETHESIZERS[fmt](fmt, panels, None).show()
 
         loop = prompt([{
             'type': 'confirm',
@@ -208,6 +208,6 @@ captions and lines are no longer accepted.', fgc=3))  # yellow
     path = ((o if re.search('\.(jpe?g|png)$', o, flags=re.I) else o + '.jpg')
             if o else 'meme.jpg')
 
-    MEMETHESIZERS[fmt](fmt, panels).save(path)
+    MEMETHESIZERS[fmt](fmt, panels, None).save(path)
 
     print(color(f'Meme saved to {path}.', fgc=2))
