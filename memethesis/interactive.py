@@ -4,9 +4,6 @@ import yaml
 from PyInquirer import prompt
 from .fancyprint import color, style
 from .memethesizers import *
-from .meme.caption import make_caption
-from .meme.imageops import stack
-from .meme.separator import make_sep
 from .format_utils import *
 
 FORMATS = read_formats()

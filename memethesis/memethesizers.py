@@ -2,7 +2,6 @@ from .meme.vertical import make_vertical
 from .meme.horizontal import make_horizontal
 from .meme.single import make_single
 from .format_utils import *
-from .fonts import get_fontpath
 
 FORMATS = read_formats()
 COMPOSITORS = {

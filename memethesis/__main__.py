@@ -1,15 +1,10 @@
 from argparse import ArgumentParser
 import sys
+import re
 from .fancyprint import color
 from .memethesizers import *
 from .format_utils import *
-from .meme.vertical import make_vertical
-from .meme.horizontal import make_horizontal
-from .meme.caption import make_caption
-from .meme.imageops import stack
-from .meme.separator import make_sep
 from .interactive import interactive
-from re import search, I
 
 FORMATS = read_formats()
 FMT_NAMES = get_format_names(FORMATS)
@@ -80,8 +75,8 @@ def main():
         # to eliminate such "blank" tuples,
         # we run a filter against the list above.
         panels = list(filter(lambda tup: bool(tup[1]),
-                        [(n, args[n.replace('-', '_')])
-                         for n in PANEL_TYPES[fmt]]))
+                             [(n, args[n.replace('-', '_')])
+                              for n in PANEL_TYPES[fmt]]))
         # NOTE: argparse gives us --flag-with-dashes
         # as args['flag_with_dashes']
 
@@ -96,7 +91,8 @@ def main():
 
         if args['output']:
             o = args['output']
-            path = ((o if search('\.(jpe?g|png)$', o, flags=I) else o + '.jpg')
+            path = ((o if re.search('\.(jpe?g|png)$', o, flags=re.I)
+                     else o + '.jpg')
                     if o else 'meme.jpg')
             meme.save(path)
             print(color(f'Meme saved to {path}.', fgc=2))
