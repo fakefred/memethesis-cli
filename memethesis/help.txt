@@ -1,0 +1,24 @@
+Memethesis CLI - All Your Memes Are Belong To Us!
+
+arguments:
+  -h, --help            show this help message and exit
+  -l, --list            show a list of meme formats and exit
+  -i, --interactive     interactive mode (certain formats only)
+
+  -f, --format FORMAT   the meme format to use
+  -c, --caption CAPTION caption text to add above your meme
+
+  -o, --output OUTPUT   save the meme as (jpg/png)
+  -p, --preview         display meme without saving it,
+                        unless -o/--output is specified
+
+usage:
+  # command mode
+  $ memethesis -f FORMAT [-p|-o filename] --flag0 TEXT0 --flag1 TEXT1 ...
+  
+  # remember to wrap spaced strings in quotes
+  # example:
+  $ memethesis -f drake -o meme.png --dislike 'one thing' --like 'another thing'
+  
+  # interactive mode
+  $ memethesis -i

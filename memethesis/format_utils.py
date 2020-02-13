@@ -27,7 +27,7 @@ def get_panel_types(fmts: dict) -> dict:
 def get_panel_descriptions(fmts: dict) -> dict:
     descrips = {
         fk: {
-            pk: pv['description']
+            pk: pv['description'] if 'description' in pv else ''
             for pk, pv in fv['panels'].items()
         } for fk, fv in fmts.items()
     }
