@@ -54,10 +54,10 @@ Installing from git repository:
 
 ```bash
 $ cd ~ # use $HOME
-$ git clone https://github.com/fakefred/memethesis-cli # clone the git repo
-$ cd memethesis-cli # go into directory
+$ git clone https://github.com/fakefred/memethesis-cli # will clone the git repo
+$ cd memethesis-cli # will go into directory
 $ python3 setup.py bdist_wheel  # will generate .whl
-$ pip3 install dist/memethesis*
+$ pip3 install dist/memethesis* # will install the newly-created memethesis.whl created above
 ```
 
 ### Usage
