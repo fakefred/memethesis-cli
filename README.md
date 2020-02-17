@@ -87,6 +87,10 @@ meme. Create `format.yml` inside the dir you created.
     <name>:  # < Flag for this panel/textbox
     # For example, if you named your panel/textbox 'dislike'
     # it is accessed via '--dislike <text>'
+    # Make your panel/textbox as unique as possible,
+    # and if you can, make it short and descriptive.
+    # IMPORTANT: flag names CAN collide. Make your flag different from
+    # all others.
       description*: <description>
       # ^ Shown in --list and, if the composition is not single,
       # in --interactive
