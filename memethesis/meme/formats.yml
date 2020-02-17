@@ -128,3 +128,13 @@ draw25:
       description: That guy who drew 25
       textbox: [300, 200, 180, 100]
       style: stroke
+
+onefear:
+  composition: single
+  image: onefear/onefear.jpg
+  font: impact
+  panels:
+    fear:
+      description: Text on T-shirt (the one fear)
+      textbox: [260, 100, 135, 120]
+      style: stroke
