@@ -17,42 +17,11 @@ if you cannot, open an issue.
 The former type of contributors should pay attention to such issues,
 and help with them when possible.
 
-## Guide for new formats
-
-Just stuff in metadata into `memethesis/meme/formats.yml` and images into
-`memethesis/meme/res/template/[template_name]/[image_name]`.
-Here are a few points to follow:
-
-- Make the directory and files distinguishable from others or potential ones:
-  for example, `spiderman` serves as a poor identifier for meme formats because there
-  are countless spiderman memes.
-- Keep the image resolution moderately high. 800px wide is enough.
-  Don't scale up too much.
-- Use underscores(`_`).
-- Use lower case as default, unless capital ones are necessary.
-- Update aforementioned `formats.yml` with reference to existing formats if possible.
-  When in doubt, consult people who have submitted new formats in the yml.
-- Test before opening a PR. Ensure the textboxes are right by feeding it long
-  strings like `'mm mm mm mm mm mm mm mm mm mm mm mm mm mm mm mm'`.
-  I will clone your fork and test personally.
-
 ## Help
 
 ### Installing
 
-```bash
-$ pip install memethesis
 ```
-
-Or when updating:
-
-```bash
-$ pip install memethesis==<latest_version> --upgrade
-```
-
-Installing from git repository:
-
-```bash
 $ cd ~ # use $HOME
 $ git clone https://github.com/fakefred/memethesis-cli # will clone the git repo
 $ cd memethesis-cli # will go into directory
@@ -65,7 +34,7 @@ $ pip3 install dist/memethesis* # will install the newly-created memethesis.whl 
 > This part assumes you have a working python 3.x environment,
 > which `python` refers to. If your OS uses `python3`, you are smart enough.
 
-```bash
+```
 $ memethesis -h
 Memethesis CLI - All Your Memes Are Belong To Us!
 
@@ -94,12 +63,92 @@ usage:
   $ memethesis -i
 ```
 
+## Guide for new formats
+
+`cd` to `./memethesis/meme/res/template`. Create a directory named after your
+meme. Create `format.yml` inside the dir you created.
+
+### `formats.yml`
+
+#### Canonical documentation
+
+```yml
+# Keywords wrapped in <square brackets> are to be modified on demand;
+# others are hardcoded. Starred (*) keywords are optional.
+<name>:  # The flag you use for the meme format
+# For example, if you name it 'drake' it is accessed via '-f drake'
+  composition: vertical|horizontal|single
+  # Denotes how the meme is made: stacked top to bottom,
+  # laid side by side, or a single panel
+  # Respective examples: drake, womanyelling, pigeon
+  panels:
+    # ^ When composition == 'single', things put here
+    # are textboxes instead of panels, which are pasted on one panel
+    <name>:  # < Flag for this panel/textbox
+    # For example, if you named your panel/textbox 'dislike'
+    # it is accessed via '--dislike <text>'
+      description*: <description>
+      # ^ Shown in --list and, if the composition is not single,
+      # in --interactive
+      image: <dir>/<image>
+      # ^ Image path relative to ./memethesis/meme/res/template/
+      textbox: [370, 12, 400, 250]
+      # ^ Textbox position, in left, top, width, height
+      font*: notosans|notosansmono|impact|comicsans
+      # ^ Default font for the template
+      # (memethesis assumes notosans if none; see `fonts.py`)
+      # Overridden when '--font' is specified in command mode
+      style*: stroke
+      # ^ Use 'stroke' if default font is impact for best effects
+    <name>:
+      # ...
+    # ...
+<name>:  # You can combine multiple templates into one dir,
+# but only do that when they're relevant and inseparable
+# ...
+```
+
+#### Example
+
+Here is an tested example, from the drake format:
+
+```yml
+drake:
+  composition: vertical
+  panels:
+    dislike:
+      description: Drake dislike
+      image: drake/drake_dislike.jpg
+      textbox: [370, 12, 400, 250]
+    like:
+      description: Drake like
+      image: drake/drake_like.jpg
+      textbox: [370, 20, 400, 250]
+```
+
+Here are a few points to follow:
+
+- Make the directory and files distinguishable from others or potential ones:
+  for example, `spiderman` serves as a poor identifier for meme formats because there are countless spiderman memes.
+- Keep the image resolution moderately high. 800px wide is enough.
+  Don't scale up too much.
+- Don't include whitespace in filenames and yml keywords.
+- Use lower case as default, unless capital ones are necessary.
+- Test before opening a PR. Ensure the textboxes are right by feeding it long
+  strings like `'mm mm mm mm mm mm mm mm mm mm mm mm mm mm mm mm'`.
+  I will clone your fork and test personally.
+- If you ensure the test passes, add a command you use to test your format to
+  `test.sh` in the root dir of the project.
+
 ## Debugging
 
 ```bash
 [make edits]
 # to test by running module
 $ python -m memethesis.__main__ [args]
+# to test all formats with shell script
+$ sudo chmod +x test.sh
+$ ./test.sh
 # to test by installing wheel
 $ python setup.py bdist_wheel  # will generate .whl
 $ pip install dist/memethesis-[something].whl
