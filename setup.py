@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='memethesis',
-    version='3.1.0b0',
+    version='3.2.0',
     description='A CLI tool to visualize your memes',
     long_description=open('./README.md').read(),
     long_description_content_type='text/markdown',
@@ -12,7 +12,7 @@ setup(
     author='fakefred',
     author_email='fakefred@protonmail.ch',
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: End Users/Desktop',
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Natural Language :: English',
