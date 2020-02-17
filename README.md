@@ -53,8 +53,11 @@ $ pip install memethesis==<latest_version> --upgrade
 Installing from git repository:
 
 ```bash
-$ python setup.py bdist_wheel  # will generate .whl
-$ pip install dist/memethesis-[something].whl
+$ cd ~ # use $HOME
+$ git clone https://github.com/fakefred/memethesis-cli # will clone the git repo
+$ cd memethesis-cli # will go into directory
+$ python3 setup.py bdist_wheel  # will generate .whl
+$ pip3 install dist/memethesis* # will install the newly-created memethesis.whl created above
 ```
 
 ### Usage
