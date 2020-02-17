@@ -1,19 +1,33 @@
 import yaml
-from os import path
+from os import path, listdir
 from .fancyprint import color
 import sys
 
 
 def read_formats() -> dict:
-    try:
-        return yaml.load(
-            open(path.join(path.dirname(__file__), 'meme/formats.yml')),
-            Loader=yaml.FullLoader)
-    except FileNotFoundError:
-        print(color(
-            f'Error: {path.join(path.dirname(__file__), "meme/formats.yml")} not found.',
-            fgc=1))  # red
-        sys.exit(1)
+    # template metadata are stored in
+    # ./res/template/<template_name>/format.yml
+    templates = {}
+    temp_path = path.join(path.dirname(__file__), 'meme/res/template')
+    temp_dirs = listdir(temp_path)
+    for temp in temp_dirs:
+        try:
+            fmt = yaml.load(
+                open(path.join(temp_path, temp, 'format.yml')),
+                Loader=yaml.FullLoader)
+            for k, v in fmt.items():
+                templates[k] = v
+        except FileNotFoundError:
+            print(color(
+                f'Warning: no format.yml found for meme format `{temp}`.',
+                fgc=3))  # yellow
+            continue
+
+    if templates:
+        return templates
+
+    print(color('No meme formats found.', fgc=1))
+    sys.exit(1)
 
 
 def get_format_names(fmts: dict) -> list:

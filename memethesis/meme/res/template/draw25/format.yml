@@ -1,0 +1,13 @@
+draw25:
+  composition: single
+  image: draw25/draw_25_or_do_sth.jpg
+  font: impact
+  panels:
+    do:
+      description: Do sth
+      textbox: [90, 150, 150, 100]
+      style: stroke
+    guy:
+      description: That guy who drew 25
+      textbox: [300, 200, 180, 100]
+      style: stroke

@@ -1,0 +1,11 @@
+womanyelling:
+  composition: horizontal
+  panels:
+    woman:
+      description: Woman yelling
+      image: womanyelling/taylor.jpg
+      textbox: [10, 10, 480, 150]
+    cat:
+      description: Confused cat
+      image: womanyelling/catto.jpg
+      textbox: [10, 10, 480, 150]

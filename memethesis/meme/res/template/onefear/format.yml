@@ -1,0 +1,9 @@
+onefear:
+  composition: single
+  image: onefear/onefear.jpg
+  font: impact
+  panels:
+    fear:
+      description: Text on T-shirt (the one fear)
+      textbox: [260, 100, 135, 120]
+      style: stroke

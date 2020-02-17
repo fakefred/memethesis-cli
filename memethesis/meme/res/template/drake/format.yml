@@ -1,0 +1,11 @@
+drake:
+  composition: vertical
+  panels:
+    dislike:
+      description: Drake dislike
+      image: drake/drake_dislike.jpg
+      textbox: [370, 12, 400, 250]
+    like:
+      description: Drake like
+      image: drake/drake_like.jpg
+      textbox: [370, 20, 400, 250]

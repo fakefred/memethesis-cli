@@ -1,0 +1,11 @@
+pooh:
+  composition: vertical
+  panels:
+    tired:
+      description: Regular Winnie the Pooh
+      image: pooh/tired.jpg
+      textbox: [370, 10, 300, 240]
+    wired:
+      description: Tuxedo Winnie the Pooh
+      image: pooh/wired.jpg
+      textbox: [370, 10, 300, 240]

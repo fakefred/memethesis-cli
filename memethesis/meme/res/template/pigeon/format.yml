@@ -1,0 +1,17 @@
+pigeon:
+  composition: single
+  image: pigeon/is_this_a_pigeon.jpg
+  font: impact
+  panels:
+    katori:
+      description: Katori (the guy)  
+      textbox: [150, 80, 220, 80]
+      style: stroke
+    butterfly:
+      description: Butterfly
+      textbox: [550, 100, 150, 80]      
+      style: stroke
+    is-this-a:
+      description: Is this a ...?
+      textbox: [60, 450, 625, 80]
+      style: stroke
