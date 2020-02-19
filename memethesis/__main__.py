@@ -66,7 +66,13 @@ def main():
         sys.exit(0)
 
     elif args['interactive']:
-        interactive()
+        try:
+            interactive()
+        # PyInquirer throws a KeyError when user presses ^C
+        # This ensures better UX, but when debugging,
+        # perhaps you should remove the try...except block.
+        except KeyError:
+            sys.exit(1)
     else:
         # command mode
         # validate format
