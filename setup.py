@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='memethesis',
-    version='3.2.0',
+    version='3.2.1',
     description='A CLI tool to visualize your memes',
     long_description=open('./README.md').read(),
     long_description_content_type='text/markdown',
