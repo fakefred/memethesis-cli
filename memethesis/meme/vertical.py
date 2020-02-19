@@ -26,9 +26,12 @@ def make_vertical(format: str, entities: list, cmdfont=None):
 
     panels = format_info['panels']
 
-    global_font = get_fontpath(
-        format_info['font'] if 'font' in format_info
-        else 'notosans')
+    if cmdfont:
+        global_font = get_fontpath(cmdfont)
+    else:
+        global_font = get_fontpath(
+            format_info['font'] if 'font' in format_info
+            else 'notosans')
     global_style = format_info['style'] if 'style' in format_info else None
 
     meme_width = Image.open(path.join(  # width of an arbitrary panel

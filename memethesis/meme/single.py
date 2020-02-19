@@ -28,9 +28,12 @@ def make_single(format: str, entities: list, cmdfont=None):
     template = Image.open(
         path.join(path.dirname(__file__), 'res/template', format_info['image']))
 
-    global_font = get_fontpath(
-        format_info['font'] if 'font' in format_info
-        else 'notosans')
+    if cmdfont:
+        global_font = get_fontpath(cmdfont)
+    else:
+        global_font = get_fontpath(
+            format_info['font'] if 'font' in format_info
+            else 'notosans')
     global_style = format_info['style'] if 'style' in format_info else None
 
     layers = []

@@ -25,10 +25,13 @@ def make_horizontal(format, entities: list, cmdfont=None):
         sys.exit(1)
 
     panels = format_info['panels']
-
-    global_font = get_fontpath(
-        format_info['font'] if 'font' in format_info
-        else 'notosans')
+    
+    if cmdfont:
+        global_font = get_fontpath(cmdfont)
+    else:
+        global_font = get_fontpath(
+            format_info['font'] if 'font' in format_info
+            else 'notosans')
     global_style = format_info['style'] if 'style' in format_info else None
 
     body_panels = []

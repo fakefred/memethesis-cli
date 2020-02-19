@@ -4,6 +4,7 @@ import yaml
 from PyInquirer import prompt
 from .fancyprint import color, style
 from .memethesizers import *
+from .fonts import FONTS
 from .format_utils import *
 
 FORMATS = read_formats()
@@ -92,6 +93,14 @@ captions and lines are no longer accepted.', fgc=3))  # yellow
                 fgc=1))  # red
             loop = True
 
+    # select font
+    cmdfont = prompt([{
+        'type': 'list',
+        'name': 'font',
+        'message': 'Select font:',
+        'choices': FONTS.keys()
+    }])['font']
+
     # begin editing panels
     loop = True
     while loop:
@@ -100,11 +109,11 @@ captions and lines are no longer accepted.', fgc=3))  # yellow
         preview = prompt([{
             'type': 'confirm',
             'name': 'preview',
-            'message': 'Display a preview of your meme?',
+            'message': 'Display a preview of your meme? (Esc to close preview)',
             'default': True
         }])['preview']
         if preview:
-            MEMETHESIZERS[fmt](fmt, panels, None).show()
+            MEMETHESIZERS[fmt](fmt, panels, cmdfont=cmdfont).show()
 
         loop = prompt([{
             'type': 'confirm',
@@ -208,6 +217,6 @@ captions and lines are no longer accepted.', fgc=3))  # yellow
     path = ((o if re.search('\.(jpe?g|png)$', o, flags=re.I) else o + '.jpg')
             if o else 'meme.jpg')
 
-    MEMETHESIZERS[fmt](fmt, panels, None).save(path)
+    MEMETHESIZERS[fmt](fmt, panels, cmdfont=cmdfont).save(path)
 
     print(color(f'Meme saved to {path}.', fgc=2))
