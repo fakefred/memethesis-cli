@@ -19,14 +19,36 @@ and help with them when possible.
 
 ## Help
 
-### Installing
+### Installing from PyPI
+NOTE: we are using `pip3` instead of `pip` since most OSes don't only have Python3;
+for example Ubuntu distributions ship with python2 and python3.
 
-```
+Firstly, let's upgrade pip:
+
+`pip3 install --upgrade pip`
+
+Next, let's install memethesis from PyPI:
+
+`pip3 install memethesis`
+
+### Building and installing from source
+
+There are two methods: the first method requires the user to build `memethesis.whl` themselves, meanwhile the second method fetches the already built wheel from the github repo.
+
+__First method (cloning the repo, building and installing)__:
+```bash
 $ cd ~ # use $HOME
 $ git clone https://github.com/fakefred/memethesis-cli # will clone the git repo
 $ cd memethesis-cli # will go into directory
 $ python3 setup.py bdist_wheel  # will generate .whl
 $ pip3 install dist/memethesis* # will install the newly-created memethesis.whl created above
+```
+
+__Second method (installing prebuilt wheel)__:
+```bash
+cd $HOME/Downloads
+wget https://github.com/fakefred/memethesis-cli/releases/latest/download/memethesis.whl
+pip3 install memethesis.whl
 ```
 
 ### Usage
