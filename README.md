@@ -27,7 +27,6 @@ Firstly, let's upgrade pip:
 
 `pip3 install --upgrade pip`
 
-
 Next, let's install memethesis from PyPI:
 
 `pip3 install memethesis`
@@ -36,7 +35,7 @@ Next, let's install memethesis from PyPI:
 
 There are two methods: the first method requires the user to build `memethesis.whl` themselves, meanwhile the second method fetches the already built wheel from the github repo.
 
-__First method__:
+__First method (cloning the repo, building and installing)__:
 ```bash
 $ cd ~ # use $HOME
 $ git clone https://github.com/fakefred/memethesis-cli # will clone the git repo
@@ -45,7 +44,7 @@ $ python3 setup.py bdist_wheel  # will generate .whl
 $ pip3 install dist/memethesis* # will install the newly-created memethesis.whl created above
 ```
 
-__Second method__:
+__Second method (installing prebuilt binary)__:
 ```bash
 cd $HOME/Downloads
 wget https://github.com/fakefred/memethesis-cli/releases/latest/download/memethesis.whl
