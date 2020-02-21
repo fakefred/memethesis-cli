@@ -44,7 +44,7 @@ $ python3 setup.py bdist_wheel  # will generate .whl
 $ pip3 install dist/memethesis* # will install the newly-created memethesis.whl created above
 ```
 
-__Second method (installing prebuilt binary)__:
+__Second method (installing prebuilt wheel)__:
 ```bash
 cd $HOME/Downloads
 wget https://github.com/fakefred/memethesis-cli/releases/latest/download/memethesis.whl
