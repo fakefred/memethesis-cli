@@ -1,0 +1,23 @@
+mcmahon:
+  composition: vertical
+  panels:
+    r1:
+      description: Reaction 1
+      image: mcmahon/reaction1.jpg
+      textbox: [10, 10, 380, 160]
+    r2:
+      description: Reaction 2
+      image: mcmahon/reaction2.jpg
+      textbox: [10, 10, 380, 160]
+    r3:
+      description: Reaction 3
+      image: mcmahon/reaction3.jpg
+      textbox: [10, 10, 380, 160]
+    r4:
+      description: Reaction 4
+      image: mcmahon/reaction4.jpg
+      textbox: [10, 10, 380, 160]
+    r5:
+      description: Reaction 5
+      image: mcmahon/reaction5.jpg
+      textbox: [10, 10, 380, 160]

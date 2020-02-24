@@ -9,3 +9,4 @@ python3 -m memethesis.__main__ --no-save -f womanyelling --woman 0 --cat 1
 python3 -m memethesis.__main__ --no-save -f pooh --tired 0 --wired 1
 python3 -m memethesis.__main__ --no-save -f pigeon --katori 0 --butterfly 1 --is-this-a 2
 python3 -m memethesis.__main__ --no-save -f draw25 --do 0 --guy 1
+python3 -m memethesis.__main__ --no-save -f mcmahon --r1 0 --r2 1 --r3 2 --r4 3 --r5 4
