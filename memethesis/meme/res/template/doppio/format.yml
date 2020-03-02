@@ -1,0 +1,15 @@
+doppio:
+  composition: vertical
+  panels:
+    choking:
+      description: Doppio choking
+      image: doppio/choking.jpg
+      textbox: [600, 60, 425, 330]
+    ok:
+      description: Doppio ok
+      image: doppio/ok.jpg
+      textbox: [600, 60, 425, 330]
+    harder:
+      description: Doppio choking harder
+      image: doppio/chokingharder.jpg
+      textbox: [600, 60, 425, 330]

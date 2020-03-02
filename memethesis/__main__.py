@@ -4,6 +4,7 @@ import re
 from os import path
 from .fancyprint import color, style
 from .memethesizers import *
+from .meme.ascii import make_ascii
 from .format_utils import *
 from .fonts import *
 from .interactive import interactive
@@ -31,6 +32,7 @@ def main():
     argparser.add_argument(
         '-c', '--caption')
     argparser.add_argument('--font')
+    argparser.add_argument('--ascii', action='store_true')
 
     # parse flags from formats.yml
     for fk, fv in PANEL_TYPES.items():
@@ -83,10 +85,10 @@ def main():
             sys.exit(1)
         # make sure the meme to be generated has something else to be
         # other than an ephemeral spectre in the volatile RAM,
-        # like a file or some screen pixels
-        if not args['preview'] and not args['output']:
+        # like a file or some screen pixels or a few lines in the terminal
+        if not args['preview'] and not args['output'] and not args['ascii']:
             print(color(
-                'Error: either -p/--preview or -o/--output needs to be present.',
+                'Error: either -p/--preview, -o/--output or --ascii needs to be present.',
                 fgc=1))
             sys.exit(1)
         # ensure font exists
@@ -109,8 +111,14 @@ def main():
         # NOTE: argparse gives us --flag-with-dashes
         # as args['flag_with_dashes']
 
+        # NOTE: captions and seps are unsupported in ascii mode
         if args['caption']:
             panels = [('caption', args['caption']), ('sep', None)] + panels
+
+        if args['ascii']:
+            # print ASCIM image and exit
+            print(make_ascii(fmt, panels))
+            sys.exit(0)
 
         meme = MEMETHESIZERS[fmt](fmt, panels, cmdfont=args['font'])
 
