@@ -1,6 +1,6 @@
 # memethesis-cli
 
-![Upload Python Package](https://github.com/fakefred/memethesis-cli/workflows/Upload%20Python%20Package/badge.svg) <a href="https://liberapay.com/fakefred/donate"><img alt="Donate using Liberapay" src="http://img.shields.io/liberapay/receives/fakefred.svg?logo=liberapay"></a>
+![PyPI](https://img.shields.io/pypi/v/memethesis) ![Upload Python Package](https://github.com/fakefred/memethesis-cli/workflows/Upload%20Python%20Package/badge.svg) <a href="https://liberapay.com/fakefred/donate"><img alt="Donate using Liberapay" src="http://img.shields.io/liberapay/receives/fakefred.svg?logo=liberapay"></a> [![Downloads](https://pepy.tech/badge/memethesis)](https://pepy.tech/project/memethesis)
 
 ## Updates in 3.3.0
 
