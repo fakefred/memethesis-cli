@@ -2,6 +2,27 @@
 
 ![Upload Python Package](https://github.com/fakefred/memethesis-cli/workflows/Upload%20Python%20Package/badge.svg) <a href="https://liberapay.com/fakefred/donate"><img alt="Donate using Liberapay" src="http://img.shields.io/liberapay/receives/fakefred.svg?logo=liberapay"></a>
 
+## Updates in 3.3.0
+
+ASCII memes are here. However they don't come without cost. Memethesis needs
+contributions that push this feature forward, by making ASCII templates.
+Trust me, it's fun. 
+Be sure to check out [ASCIM](https://github.com/fakefred/ascim), another
+project of mine which powers Memethesis' ASCII feature.
+Read its README to see how to make compliant ASCII art.
+
+### Templates in need of an ASCII template adaptation:
+
+- [x] Drake
+- [ ] Brain Size
+- [ ] Woman Yelling
+- [ ] Pooh
+- [ ] Pigeon
+- [ ] Draw 25
+- [ ] One Fear
+- [ ] McMahon
+- [ ] Doppio
+
 ## Updates in 3.0.0-beta
 
 Automation has reached a new level where **all** existing formats are fully
@@ -20,6 +41,7 @@ and help with them when possible.
 ## Help
 
 ### Installing from PyPI
+
 NOTE: we are using `pip3` instead of `pip` since most OSes don't only have Python3;
 for example Ubuntu distributions ship with python2 and python3.
 
@@ -35,7 +57,8 @@ Next, let's install memethesis from PyPI:
 
 There are two methods: the first method requires the user to build `memethesis.whl` themselves, meanwhile the second method fetches the already built wheel from the github repo.
 
-__First method (cloning the repo, building and installing)__:
+**First method (cloning the repo, building and installing)**:
+
 ```bash
 $ cd ~ # use $HOME
 $ git clone https://github.com/fakefred/memethesis-cli # will clone the git repo
@@ -44,7 +67,8 @@ $ python3 setup.py bdist_wheel  # will generate .whl
 $ pip3 install dist/memethesis* # will install the newly-created memethesis.whl created above
 ```
 
-__Second method (installing prebuilt wheel)__:
+**Second method (installing prebuilt wheel)**:
+
 ```bash
 cd $HOME/Downloads
 wget https://github.com/fakefred/memethesis-cli/releases/latest/download/memethesis.whl
@@ -72,6 +96,8 @@ arguments:
   -o, --output OUTPUT   save the meme as (jpg/png)
   -p, --preview         display meme without saving it,
                         unless -o/--output is specified
+  --ascii               generate your meme in ASCII and print
+                        to stdout.
 
 usage:
   # command mode
@@ -99,13 +125,16 @@ meme. Create `format.yml` inside the dir you created.
 # others are hardcoded. Starred (*) keywords are optional.
 <name>:  # The flag you use for the meme format
 # For example, if you name it 'drake' it is accessed via '-f drake'
+
   composition: vertical|horizontal|single
   # Denotes how the meme is made: stacked top to bottom,
   # laid side by side, or a single panel
   # Respective examples: drake, womanyelling, pigeon
+
   panels:
     # ^ When composition == 'single', things put here
     # are textboxes instead of panels, which are pasted on one panel
+
     <name>:  # < Flag for this panel/textbox
     # For example, if you named your panel/textbox 'dislike'
     # it is accessed via '--dislike <text>'
@@ -113,25 +142,44 @@ meme. Create `format.yml` inside the dir you created.
     # and if you can, make it short and descriptive.
     # IMPORTANT: flag names CAN collide. Make your flag different from
     # all others.
+
       description*: <description>
       # ^ Shown in --list and, if the composition is not single,
       # in --interactive
+
       image: <dir>/<image>
       # ^ Image path relative to ./memethesis/meme/res/template/
-      textbox: [370, 12, 400, 250]
-      # ^ Textbox position, in left, top, width, height
+
+      textbox: [left, top, width, height]
+      # ^ Textbox position
+
       font*: notosans|notosansmono|impact|comicsans
       # ^ Default font for the template
       # (memethesis assumes notosans if none; see `fonts.py`)
       # Overridden when '--font' is specified in command mode
+
       style*: stroke
       # ^ Use 'stroke' if default font is impact for best effects
+
+      ascii*: |  # `|` means lines ahead are part of string until dedent
+        +---+---+
+        |   |   |
+        +---+---+
+      # For the ascii template, wrap it in a rectangle
+      # In fact, *what* the rect is made of does not matter,
+      # but it's best to conform to the ASCIM standards
+
+      asciibox*: [left, top, width, height]
+      # ^ The box wrapping up the text
+      # Also ASCIM-compliant
+
     <name>:
       # ...
-    # ...
+
+    # more panels, if you wish
+
 <name>:  # You can combine multiple templates into one dir,
 # but only do that when they're relevant and inseparable
-# ...
 ```
 
 #### Example
@@ -146,10 +194,34 @@ drake:
       description: Drake dislike
       image: drake/drake_dislike.jpg
       textbox: [370, 12, 400, 250]
+      ascii: |
+        +-----------------------+---------------------------------+
+        |                       |                                 |
+        |    _____              |                                 |
+        |   /     \             |                                 |
+        |  | \  /  | |||        |                                 |
+        |  |       | \|/        |                                 |
+        |   \_^___/   |         |                                 |
+        |   /     \  /          |                                 |
+        |  |________/           |                                 |
+        +-----------------------+---------------------------------+
+      asciibox: [26, 1, 31, 8]
     like:
       description: Drake like
       image: drake/drake_like.jpg
       textbox: [370, 20, 400, 250]
+      ascii: |
+        +-----------------------+---------------------------------+
+        |              _____    |                                 |
+        |             /     \   |                                 |
+        |            | /  \  |  |                                 |
+        |            |       |  |                                 |
+        |            _\_v___/_  |                                 |
+        |           /         \ |                                 |
+        |          /       /  |\|                                 |
+        |         |      \/  /  |                                 |
+        +-----------------------+---------------------------------+
+      asciibox: [26, 1, 31, 8]
 ```
 
 Here are a few points to follow:

@@ -12,6 +12,8 @@ arguments:
   -o, --output OUTPUT   save the meme as (jpg/png)
   -p, --preview         display meme without saving it,
                         unless -o/--output is specified
+  --ascii               generate your meme in ASCII and print
+                        to stdout.
 
 usage:
   # command mode
