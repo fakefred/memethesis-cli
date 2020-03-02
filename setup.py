@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='memethesis',
-    version='3.2.1',
+    version='3.3.0',
     description='A CLI tool to visualize your memes',
     long_description=open('./README.md').read(),
     long_description_content_type='text/markdown',
@@ -26,7 +26,7 @@ setup(
         ]
     },
     python_requires='>=3.5',
-    install_requires=['PyYAML>=5.1', 'Pillow', 'PyInquirer', 'colored'],
+    install_requires=['PyYAML>=5.1', 'Pillow', 'PyInquirer', 'colored', 'ascim'],
     project_urls={
         'LiberaPay': 'https://liberapay.com/fakefred/donate'
     }

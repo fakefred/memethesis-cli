@@ -32,6 +32,7 @@ def main():
     argparser.add_argument(
         '-c', '--caption')
     argparser.add_argument('--font')
+    argparser.add_argument('--no-save', action='store_true')
     argparser.add_argument('--ascii', action='store_true')
 
     # parse flags from formats.yml
@@ -86,7 +87,7 @@ def main():
         # make sure the meme to be generated has something else to be
         # other than an ephemeral spectre in the volatile RAM,
         # like a file or some screen pixels or a few lines in the terminal
-        if not args['preview'] and not args['output'] and not args['ascii']:
+        if not (args['preview'] or args['output'] or args['ascii'] or args['no_save']):
             print(color(
                 'Error: either -p/--preview, -o/--output or --ascii needs to be present.',
                 fgc=1))
