@@ -1,6 +1,6 @@
 from ascim.ascim import ASCIM
 from ascim.draw import ASCIMDraw
-from ascim.tables import ASCIMTable
+from ascim.table import ASCIMTable
 from ..format_utils import read_formats
 from ..fancyprint import color
 import sys
