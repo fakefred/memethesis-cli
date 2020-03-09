@@ -18,7 +18,7 @@ Read its README to see how to make compliant ASCII art.
 - [ ] Woman Yelling
 - [ ] Pooh
 - [ ] Pigeon
-- [ ] Draw 25
+- [x] Draw 25
 - [ ] One Fear
 - [ ] McMahon
 - [ ] Doppio
