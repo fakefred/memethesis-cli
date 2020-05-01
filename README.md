@@ -1,6 +1,6 @@
 # memethesis-cli
 
-![PyPI](https://img.shields.io/pypi/v/memethesis) ![Upload Python Package](https://github.com/fakefred/memethesis-cli/workflows/Upload%20Python%20Package/badge.svg) <a href="https://liberapay.com/fakefred/donate"><img alt="Donate using Liberapay" src="http://img.shields.io/liberapay/receives/fakefred.svg?logo=liberapay"></a> [![Downloads](https://pepy.tech/badge/memethesis)](https://pepy.tech/project/memethesis)
+![AUR](https://img.shields.io/badge/AUR-v3.3.0-informational) ![PyPI](https://img.shields.io/pypi/v/memethesis) ![Upload Python Package](https://github.com/fakefred/memethesis-cli/workflows/Upload%20Python%20Package/badge.svg) <a href="https://liberapay.com/fakefred/donate"><img alt="Donate using Liberapay" src="http://img.shields.io/liberapay/receives/fakefred.svg?logo=liberapay"></a> [![Downloads](https://pepy.tech/badge/memethesis)](https://pepy.tech/project/memethesis)
 
 ## Updates in 3.3.0
 
@@ -38,13 +38,40 @@ if you cannot, open an issue.
 The former type of contributors should pay attention to such issues,
 and help with them when possible.
 
-## Help
+## Installation
 
-### Installing from PyPI
+There are three methods to install `memethesis-cli`:
+1. Install memethesis-cli from the [AUR](https://aur.archlinux.org/packages/memethesis-cli);
+2. Install memethesis-cli from [PyPI](https://pypi.org/project/memethesis/)
+3. Build memethesis-cli yourself;
 
-NOTE: we are using `pip3` instead of `pip` since most OSes don't only have Python3;
-for example Ubuntu distributions ship with python2 and python3.
+### 1) Installing from the AUR
 
+NOTE: Only for Arch Linux/Manjaro users. Installing from the AUR will automatically install memethesis' dependencies.
+
+You could use an AUR Helper like `yay` or you can directly clone the repo.
+
++ Using `yay`:
+
+  - If you haven't installed `yay`: https://github.com/Jguer/yay
+
+  - If you already have `yay` (or another AUR helper):
+
+```bash
+yay -S memethesis-cli
+```
+
++ Without `yay`:
+
+```bash
+cd ~; git clone https://aur.archlinux.org/memethesis-cli.git
+cd memethesis-cli
+makepkg -si
+```
+
+### 2) Installing from PyPI
+
+NOTE: we are using `pip3` instead of `pip` because somebody might be still using Python 2.7 which is obsolete.
 Firstly, let's upgrade pip:
 
 `pip3 install --upgrade pip`
@@ -53,29 +80,16 @@ Next, let's install memethesis from PyPI:
 
 `pip3 install memethesis`
 
-### Building and installing from source
-
-There are two methods: the first method requires the user to build `memethesis.whl` themselves, meanwhile the second method fetches the already built wheel from the github repo.
-
-**First method (cloning the repo, building and installing)**:
+### 3) Building and installing from source
 
 ```bash
-$ cd ~ # use $HOME
-$ git clone https://github.com/fakefred/memethesis-cli # will clone the git repo
-$ cd memethesis-cli # will go into directory
-$ python3 setup.py bdist_wheel  # will generate .whl
-$ pip3 install dist/memethesis* # will install the newly-created memethesis.whl created above
+cd ~ # use $HOME
+git clone https://github.com/fakefred/memethesis-cli # will clone the git repo
+cd memethesis-cli # will go into directory
+python3 setup.py install # will install memethesis
 ```
 
-**Second method (installing prebuilt wheel)**:
-
-```bash
-cd $HOME/Downloads
-wget https://github.com/fakefred/memethesis-cli/releases/latest/download/memethesis.whl
-pip3 install memethesis.whl
-```
-
-### Usage
+## Usage
 
 > This part assumes you have a working python 3.x environment,
 > which `python` refers to. If your OS uses `python3`, you are smart enough.
