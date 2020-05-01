@@ -47,7 +47,7 @@ There are three methods to install `memethesis-cli`:
 
 ### 1) Installing from the AUR
 
-NOTE: Only for Arch Linux/Manjaro users.
+NOTE: Only for Arch Linux/Manjaro users. Installing from the AUR will automatically install memethesis' dependencies.
 
 You could use an AUR Helper like `yay` or you can directly clone the repo.
 
