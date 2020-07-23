@@ -74,7 +74,7 @@ makepkg -si
 
 NOTE: Ensure the GURU overlay [is enabled](https://wiki.gentoo.org/wiki/Ebuild_repository), it is needed for memethesis-cli as well as some of its dependencies.
 
-Edit `/etc/portage/package.accept_keywords` for `media-gfx/memethesis` and its dependencies that need it. Install with:
+Edit `/etc/portage/package.accept_keywords` for `media-gfx/memethesis-cli` and its dependencies that need it. Install with:
 
 ```bash
 emerge media-gfx/memethesis-cli
