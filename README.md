@@ -40,10 +40,11 @@ and help with them when possible.
 
 ## Installation
 
-There are three methods to install `memethesis-cli`:
+There are multiple methods to install `memethesis-cli`:
 1. Install memethesis-cli from the [AUR](https://aur.archlinux.org/packages/memethesis-cli);
-2. Install memethesis-cli from [PyPI](https://pypi.org/project/memethesis/)
-3. Build memethesis-cli yourself;
+2. Install memethesis-cli from the [GURU overlay](https://gpo.zugaina.org/Overlays/guru/media-gfx/memethesis-cli) for Gentoo;
+3. Install memethesis-cli from [PyPI](https://pypi.org/project/memethesis/);
+4. Build memethesis-cli yourself;
 
 ### 1) Installing from the AUR
 
@@ -69,7 +70,17 @@ cd memethesis-cli
 makepkg -si
 ```
 
-### 2) Installing from PyPI
+### 2) Installing from the GURU overlay
+
+NOTE: Ensure the GURU overlay [is enabled](https://wiki.gentoo.org/wiki/Ebuild_repository), it is needed for memethesis-cli as well as some of its dependencies.
+
+Edit `/etc/portage/package.accept_keywords` for `media-gfx/memethesis` and its dependencies that need it. Install with:
+
+```bash
+emerge media-gfx/memethesis-cli
+```
+
+### 3) Installing from PyPI
 
 NOTE: we are using `pip3` instead of `pip` because somebody might be still using Python 2.7 which is obsolete.
 Firstly, let's upgrade pip:
@@ -80,7 +91,7 @@ Next, let's install memethesis from PyPI:
 
 `pip3 install memethesis`
 
-### 3) Building and installing from source
+### 4) Building and installing from source
 
 ```bash
 cd ~ # use $HOME
