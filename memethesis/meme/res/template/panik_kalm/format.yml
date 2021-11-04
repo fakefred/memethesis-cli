@@ -1,0 +1,11 @@
+panik_kalm:
+  composition: vertical
+  panels:
+    panik:
+      description: Panik
+      image: panik_kalm/panik.jpg
+      textbox: [20, 20, 260, 260]
+    kalm:
+      description: Kalm
+      image: panik_kalm/kalm.jpg
+      textbox: [20, 20, 260, 260]

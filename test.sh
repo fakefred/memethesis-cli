@@ -11,3 +11,4 @@ python3 -m memethesis.__main__ --no-save -f pigeon --katori 0 --butterfly 1 --is
 python3 -m memethesis.__main__ --no-save -f draw25 --do 0 --guy 1
 python3 -m memethesis.__main__ --no-save -f mcmahon --r1 0 --r2 1 --r3 2 --r4 3 --r5 4
 python3 -m memethesis.__main__ --no-save -f doppio --choking 0 --ok 1 --harder 2
+python3 -m memethesis.__main__ --no-save -f panik_kalm --panik 0 --kalm 1
